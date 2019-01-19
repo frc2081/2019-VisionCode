@@ -1,5 +1,6 @@
-#include "Header.h"
 #include "pch.h"
+#include "GripPipeline.h"
+
 
 namespace grip {
 		GripPipeline::GripPipeline() {

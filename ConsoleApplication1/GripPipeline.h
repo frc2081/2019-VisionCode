@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GRIP_PIPELINE_H
+#define GRIP_PIPELINE_H
+
 #include <opencv2/objdetect/objdetect.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -45,6 +47,4 @@ namespace grip {
 
 
 } // end namespace grip
-
-
-#pragma once
+#endif
