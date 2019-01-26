@@ -24,9 +24,10 @@ namespace Icarus
 		data->SetBlobData(_pipeline->GetFindBlobsOutput());
 	}
 
-	VisionManager::VisionManager(VisionConfiguration* config)
+	VisionManager::VisionManager(VisionConfiguration* config, VisionSink* sink)
 	{
 		_config = config;
+		_sink = sink;
 		_initialized = false;
 	}
 
@@ -61,8 +62,7 @@ namespace Icarus
 	int VisionManager::Run()
 	{		
 		ImageData data;
-		const char* windowName = "camera";
-		
+		const char* windowName = "camera";		
 
 		namedWindow(windowName);
 

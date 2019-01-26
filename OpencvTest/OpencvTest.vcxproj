@@ -144,6 +144,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraDisplay.h" />
     <ClInclude Include="ConfigurationReader.h" />
     <ClInclude Include="GripPipeline.h" />
     <ClInclude Include="ImageData.h" />
@@ -151,8 +152,10 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VisionConfiguration.h" />
     <ClInclude Include="VisionManager.h" />
+    <ClInclude Include="VisionSink.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraDisplay.cpp" />
     <ClCompile Include="ConfigurationReader.cpp" />
     <ClCompile Include="GripPipeline.cpp" />
     <ClCompile Include="ImageData.cpp" />

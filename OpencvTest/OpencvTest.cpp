@@ -5,6 +5,7 @@
 #include "VisionManager.h"
 #include "VisionConfiguration.h"
 #include "ConfigurationReader.h"
+#include "CameraDisplay.h"
 
 using namespace Icarus;
 
@@ -20,7 +21,9 @@ int main(int argc, char** argv)
 		return rtn;
 	}
 
-	VisionManager manager(config);
+	// TODO: Create a factory, and add window name as parameter to configuration.
+	CameraDisplay sink("camera");
+	VisionManager manager(config, &sink);
 	rtn = manager.Run();
 	
 	delete config;
