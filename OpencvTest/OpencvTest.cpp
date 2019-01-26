@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 
 	if (rtn = reader.Read(argc, argv, &config))
 	{
-		reader.DisplayUsage();
+		reader.DisplayUsage(argv);
 		return rtn;
 	}
 

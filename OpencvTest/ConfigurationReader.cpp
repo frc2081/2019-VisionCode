@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ConfigurationReader.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 namespace Icarus
 {
@@ -10,13 +11,22 @@ namespace Icarus
 
 	int ConfigurationReader::Read(int argc, char ** argv, VisionConfiguration ** config)
 	{
+		double scale;
+		int cameraIndex;
+
+		if (argc < 3)
+			return 1;
+		
+		scale = atof(argv[1]);
+		cameraIndex = atoi(argv[2]);
+
 		// TODO: Actually implement this.
-		*config = new VisionConfiguration(1.0, 0);
+		*config = new VisionConfiguration(scale, cameraIndex);
 		return 0;
 	}
 
-	void ConfigurationReader::DisplayUsage()
+	void ConfigurationReader::DisplayUsage(char** argv)
 	{
-		printf("This is not currently implemented.\n");
+		printf("Usage: '%s' SCALE CAMERAINDEX", argv[0]);
 	}
 }

@@ -10,6 +10,6 @@ namespace Icarus
 	public:
 		ConfigurationReader();
 		int Read(int argc, char** argv, VisionConfiguration** config);
-		void DisplayUsage();
+		void DisplayUsage(char** argv);
 	};
 }
