@@ -144,6 +144,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConfigurationReader.h" />
     <ClInclude Include="GripPipeline.h" />
     <ClInclude Include="ImageData.h" />
     <ClInclude Include="stdafx.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="VisionManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigurationReader.cpp" />
     <ClCompile Include="GripPipeline.cpp" />
     <ClCompile Include="ImageData.cpp" />
     <ClCompile Include="OpencvTest.cpp" />

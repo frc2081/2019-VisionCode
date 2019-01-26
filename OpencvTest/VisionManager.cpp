@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "VisionManager.h"
+#include <opencv2\opencv.hpp>
+#include <opencv2\imgcodecs.hpp>
 
 using namespace std;
 using namespace grip;
@@ -54,5 +56,27 @@ namespace Icarus
 		delete _pipeline;
 		delete _cam;
 		_initialized = false;
+	}
+
+	int VisionManager::Run()
+	{		
+		ImageData data;
+		const char* windowName = "camera";
+		
+
+		namedWindow(windowName);
+
+		Initialize();
+		while (1)
+		{
+			LoadImageData(&data);
+			imshow(windowName, *data.GetImageData());
+
+			if (waitKey(1) == 27)
+				break;
+		}
+		Close();
+
+		return 0;
 	}
 }

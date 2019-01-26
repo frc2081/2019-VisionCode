@@ -24,5 +24,6 @@ namespace Icarus
 
 		void Initialize();
 		void Close();
+		int Run();
 	};
 }
