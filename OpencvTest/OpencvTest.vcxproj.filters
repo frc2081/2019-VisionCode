@@ -67,6 +67,12 @@
     <Filter Include="Source Files\Grip">
       <UniqueIdentifier>{0bc81a45-fde9-44e4-a515-26588687d226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Factories">
+      <UniqueIdentifier>{db2f51d6-46ad-4aca-8fd2-07efeb70ad39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Factories">
+      <UniqueIdentifier>{57399f01-52bf-4216-a33f-f56c63b1d1fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -108,6 +114,9 @@
     <ClInclude Include="GripPipeline.h">
       <Filter>Header Files\Grip</Filter>
     </ClInclude>
+    <ClInclude Include="VisionManagerFactory.h">
+      <Filter>Header Files\Factories</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpencvTest.cpp">
@@ -145,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="GripPipeline.cpp">
       <Filter>Source Files\Grip</Filter>
+    </ClCompile>
+    <ClCompile Include="VisionManagerFactory.cpp">
+      <Filter>Source Files\Factories</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -154,6 +154,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VisionConfiguration.h" />
     <ClInclude Include="VisionManager.h" />
+    <ClInclude Include="VisionManagerFactory.h" />
     <ClInclude Include="VisionSink.h" />
     <ClInclude Include="VisionSource.h" />
   </ItemGroup>
@@ -173,6 +174,7 @@
     </ClCompile>
     <ClCompile Include="VisionConfiguration.cpp" />
     <ClCompile Include="VisionManager.cpp" />
+    <ClCompile Include="VisionManagerFactory.cpp" />
     <ClCompile Include="VisionSink.cpp" />
     <ClCompile Include="VisionSource.cpp" />
   </ItemGroup>
