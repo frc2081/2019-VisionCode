@@ -9,7 +9,7 @@ using namespace cv;
 
 namespace Icarus
 {
-	void VisionManager::LoadImageData(ImageData* data)
+	void VisionManager::LoadImageData(ImageData* data) 
 	{
 		vector<KeyPoint>* _blobs;
 
@@ -62,15 +62,12 @@ namespace Icarus
 	int VisionManager::Run()
 	{		
 		ImageData data;
-		const char* windowName = "camera";		
-
-		namedWindow(windowName);
-
+			
 		Initialize();
 		while (1)
 		{
 			LoadImageData(&data);
-			imshow(windowName, *data.GetImageData());
+			_sink->Consume(&data);
 
 			if (waitKey(1) == 27)
 				break;

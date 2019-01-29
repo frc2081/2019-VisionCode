@@ -13,37 +13,76 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\DTO">
+      <UniqueIdentifier>{84ec855f-2693-4111-94ed-530e01a73e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DTO">
+      <UniqueIdentifier>{f04ef2ef-35f3-4d97-b269-43ffd9a2ec79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO">
+      <UniqueIdentifier>{6851d831-b400-461b-a9f0-4370310534e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{8b4d41da-6b63-416f-b8ea-9289d56b26e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Base">
+      <UniqueIdentifier>{82caa103-a4d5-4cb7-91e3-e2ac8dafc075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Base">
+      <UniqueIdentifier>{b0b1dc8e-9a58-4aec-a61d-a245be8ba2b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Sinks">
+      <UniqueIdentifier>{80101aa5-9e6b-43d5-8de5-817769a765fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Sinks">
+      <UniqueIdentifier>{758fa762-f82e-457c-8b57-27c21fbd9f49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VisualC++">
+      <UniqueIdentifier>{c3ec16f4-37b9-4ca8-af22-922f3348b187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO\Sources">
+      <UniqueIdentifier>{4b6918d7-ddff-416b-b60f-cedc6c9bdb36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Sources">
+      <UniqueIdentifier>{3e5a02c0-8386-40c3-bee1-f8cb6daf4689}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GripPipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VisionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VisionConfiguration.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ConfigurationReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImageData.h">
+      <Filter>Header Files\DTO</Filter>
+    </ClInclude>
+    <ClInclude Include="VisionConfiguration.h">
+      <Filter>Header Files\DTO</Filter>
+    </ClInclude>
+    <ClInclude Include="IoEntity.h">
+      <Filter>Header Files\IO\Base</Filter>
+    </ClInclude>
     <ClInclude Include="VisionSink.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\IO\Base</Filter>
     </ClInclude>
     <ClInclude Include="CameraDisplay.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\IO\Sinks</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\VisualC++</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files\VisualC++</Filter>
+    </ClInclude>
+    <ClInclude Include="VisionSource.h">
+      <Filter>Header Files\IO\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,20 +95,26 @@
     <ClCompile Include="GripPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ImageData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="VisionManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VisionConfiguration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ConfigurationReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ImageData.cpp">
+      <Filter>Source Files\DTO</Filter>
+    </ClCompile>
+    <ClCompile Include="VisionConfiguration.cpp">
+      <Filter>Source Files\DTO</Filter>
+    </ClCompile>
+    <ClCompile Include="IoEntity.cpp">
+      <Filter>Source Files\IO\Base</Filter>
+    </ClCompile>
     <ClCompile Include="CameraDisplay.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\IO\Sinks</Filter>
+    </ClCompile>
+    <ClCompile Include="VisionSink.cpp">
+      <Filter>Source Files\IO\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

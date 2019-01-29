@@ -6,15 +6,14 @@ namespace Icarus
 {
 	class CameraDisplay : public VisionSink
 	{
-	private:
-		bool _initialized;
+	protected:
 		const char* _windowName;
 
-		void Initialize();
-		void Close();
+		void Init();
+		void Clean();
+		void Sink(ImageData* source);
 
 	public:
 		CameraDisplay(const char* windowName);
-		void Consume(ImageData* source);
 	};
 }

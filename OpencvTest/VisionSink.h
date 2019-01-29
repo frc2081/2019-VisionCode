@@ -1,12 +1,16 @@
 #pragma once
 
+#include "IoEntity.h"
 #include "ImageData.h"
 
 namespace Icarus
 {
-	class VisionSink
+	class VisionSink : public IoEntity
 	{
+	protected:
+		virtual void Sink(ImageData* source) = 0;
+
 	public:
-		virtual void Consume(ImageData* source) = 0;
+		void Consume(ImageData* source);
 	};
 }

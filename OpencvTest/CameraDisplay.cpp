@@ -7,22 +7,14 @@ using namespace cv;
 
 namespace Icarus
 {
-	void CameraDisplay::Initialize()
+	void CameraDisplay::Init()
 	{
-		if (_initialized)
-			return;
-		
 		namedWindow(_windowName);
-		_initialized = true;
 	}
 
-	void CameraDisplay::Close()
+	void CameraDisplay::Clean()
 	{
-		if (!_initialized)
-			return;
-
 		destroyWindow(_windowName);
-		_initialized = false;
 	}
 
 	CameraDisplay::CameraDisplay(const char * windowName)
@@ -30,12 +22,9 @@ namespace Icarus
 		_windowName = windowName;
 	}
 
-	void CameraDisplay::Consume(ImageData * source)
+	void CameraDisplay::Sink(ImageData * source)
 	{
 		Mat* contents;
-		if (!_initialized)
-			Initialize();
-
 		contents = source->GetImageData();
 		imshow(_windowName, *contents);
 	}
