@@ -9,26 +9,11 @@ using namespace cv;
 
 namespace Icarus
 {
-	void VisionManager::LoadImageData(ImageData* data) 
-	{
-		vector<KeyPoint>* _blobs;
-
-		if (!_initialized)
-			throw "Attempted to load image data without initializing.";
-
-		*_cam >> _rawImage;
-		_pipeline->Process(_rawImage);
-		_blobs = _pipeline->GetFindBlobsOutput();
-
-		data->SetImageData(_pipeline->GetMaskOutput());
-		data->SetBlobData(_pipeline->GetFindBlobsOutput());
-	}
-
-	VisionManager::VisionManager(VisionConfiguration* config, VisionSink* sink)
+	VisionManager::VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink)
 	{
 		_config = config;
+		_source = source;
 		_sink = sink;
-		_initialized = false;
 	}
 
 	VisionManager::~VisionManager()
@@ -36,43 +21,29 @@ namespace Icarus
 		Close();
 	}
 
-	void VisionManager::Initialize()
+	void VisionManager::Init()
 	{
-		if (_initialized)
-			return;
-		
-		_pipeline = new GripPipeline(_config->GetScale());
-		_cam = new VideoCapture(_config->GetCameraIndex());
-
-		_initialized = true;
+		_source->Initialize();
+		_sink->Initialize();
 	}
 
-	void VisionManager::Close()
+	void VisionManager::Clean()
 	{
-		if (!_initialized)
-			return;
-
-		_cam->release();
-
-		delete _pipeline;
-		delete _cam;
-		_initialized = false;
+		_source->Close();
+		_sink->Close();
 	}
 
 	int VisionManager::Run()
 	{		
 		ImageData data;
-			
-		Initialize();
 		while (1)
 		{
-			LoadImageData(&data);
+			_source->GetImageData(&data);
 			_sink->Consume(&data);
 
 			if (waitKey(1) == 27)
 				break;
 		}
-		Close();
 
 		return 0;
 	}

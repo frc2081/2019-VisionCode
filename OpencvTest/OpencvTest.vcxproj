@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraDisplay.h" />
+    <ClInclude Include="CameraSource.h" />
     <ClInclude Include="ConfigurationReader.h" />
     <ClInclude Include="GripPipeline.h" />
     <ClInclude Include="ImageData.h" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CameraDisplay.cpp" />
+    <ClCompile Include="CameraSource.cpp" />
     <ClCompile Include="ConfigurationReader.cpp" />
     <ClCompile Include="GripPipeline.cpp" />
     <ClCompile Include="ImageData.cpp" />
@@ -172,6 +174,7 @@
     <ClCompile Include="VisionConfiguration.cpp" />
     <ClCompile Include="VisionManager.cpp" />
     <ClCompile Include="VisionSink.cpp" />
+    <ClCompile Include="VisionSource.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,6 +3,12 @@
 
 namespace Icarus
 {
+	void IoEntity::AssertInitialized()
+	{
+		if (!IsInitialized())
+			throw "IO Entity is not initialized.";
+	}
+
 	IoEntity::IoEntity()
 	{
 		_initialized = false;
@@ -11,7 +17,11 @@ namespace Icarus
 	IoEntity::~IoEntity()
 	{
 		Close();
+	}
 
+	bool IoEntity::IsInitialized()
+	{
+		return _initialized;
 	}
 
 	void IoEntity::Initialize()

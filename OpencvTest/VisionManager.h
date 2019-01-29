@@ -4,28 +4,26 @@
 #include "GripPipeline.h"
 #include "VisionConfiguration.h"
 #include "VisionSink.h"
+#include "VisionSource.h"
+#include "IoEntity.h"
 
 namespace Icarus
 {
-	class VisionManager
+	class VisionManager : public IoEntity
 	{
 	private:
-		bool _initialized;
 		VisionConfiguration* _config;
 		ImageData _imageData;
+		VisionSource* _source;
 		VisionSink* _sink;
-		grip::GripPipeline* _pipeline;
-		cv::VideoCapture* _cam;
-		cv::Mat _rawImage, *_mask;
 
-		void LoadImageData(ImageData* data);
+	protected:
+		void Init();
+		void Clean();
 
 	public:
-		VisionManager(VisionConfiguration* config, VisionSink* sink);
+		VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink);
 		virtual ~VisionManager();
-
-		void Initialize();
-		void Close();
 		int Run();
 	};
 }

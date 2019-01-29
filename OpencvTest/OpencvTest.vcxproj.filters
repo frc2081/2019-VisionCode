@@ -46,6 +46,9 @@
     <Filter Include="Source Files\IO\Sources">
       <UniqueIdentifier>{3e5a02c0-8386-40c3-bee1-f8cb6daf4689}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\VisualC++">
+      <UniqueIdentifier>{f9980de3-a8c7-4171-891d-88cfc0bdb0f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -84,11 +87,11 @@
     <ClInclude Include="VisionSource.h">
       <Filter>Header Files\IO\Base</Filter>
     </ClInclude>
+    <ClInclude Include="CameraSource.h">
+      <Filter>Header Files\IO\Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OpencvTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -115,6 +118,15 @@
     </ClCompile>
     <ClCompile Include="VisionSink.cpp">
       <Filter>Source Files\IO\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="VisionSource.cpp">
+      <Filter>Source Files\IO\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraSource.cpp">
+      <Filter>Source Files\IO\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files\VisualC++</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

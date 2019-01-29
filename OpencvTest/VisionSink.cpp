@@ -5,7 +5,7 @@ namespace Icarus
 {
 	void VisionSink::Consume(ImageData * source)
 	{
-		Initialize();
+		AssertInitialized();
 		Sink(source);
 	}
 }
