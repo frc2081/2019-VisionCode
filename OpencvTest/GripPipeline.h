@@ -13,7 +13,6 @@
 #include <vector>
 #include <string>
 #include <math.h>
-#include "pch.h"
 
 namespace grip {
 
@@ -24,6 +23,7 @@ namespace grip {
 	*/
 	class GripPipeline {
 	private:
+		double _matScale;
 		cv::Mat cvResizeOutput;
 		cv::Mat hslThresholdOutput;
 		cv::Mat cvErodeOutput;
@@ -36,7 +36,7 @@ namespace grip {
 		void findBlobs(cv::Mat &, double, double[], bool, std::vector<cv::KeyPoint> &);
 
 	public:
-		GripPipeline();
+		GripPipeline(double scale = 0.25);
 		void Process(cv::Mat& source0);
 		cv::Mat* GetCvResizeOutput();
 		cv::Mat* GetHslThresholdOutput();
