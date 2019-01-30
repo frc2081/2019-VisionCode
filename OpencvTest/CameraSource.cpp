@@ -23,14 +23,16 @@ namespace Icarus
 
 	void CameraSource::Source(ImageData * data)
 	{
-		vector<KeyPoint>* _blobs;
+		Mat* mask;
+		vector<KeyPoint>* blobs;
 
 		*_cam >> _rawImage;
 		_pipeline->Process(_rawImage);
-		_blobs = _pipeline->GetFindBlobsOutput();
+		blobs = _pipeline->GetFindBlobsOutput();
+		mask = _pipeline->GetMaskOutput();
 
-		data->SetImageData(_pipeline->GetMaskOutput());
-		data->SetBlobData(_pipeline->GetFindBlobsOutput());
+		data->SetImageData(mask);
+		data->SetBlobData(blobs);
 	}
 
 	CameraSource::CameraSource(double scale, int cameraIndex)
