@@ -12,9 +12,11 @@ namespace Icarus
 		int _cameraIndex;
 		double _scale;
 
+		std::vector<std::vector<cv::Point>>* _contours;
 		grip::GripPipeline* _pipeline;
 		cv::VideoCapture* _cam;
 		cv::Mat _rawImage, *_mask;
+		cv::SimpleBlobDetector* _detector;
 
 	protected:
 		void Init();

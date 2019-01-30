@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CameraSource.h"
+#include "GripPipeline.h"
 
 using namespace std;
 using namespace grip;
@@ -9,7 +10,7 @@ namespace Icarus
 {
 	void CameraSource::Init()
 	{
-		_pipeline = new GripPipeline(_scale);
+		_pipeline = new GripPipeline();
 		_cam = new VideoCapture(_cameraIndex);
 	}
 
@@ -24,15 +25,16 @@ namespace Icarus
 	void CameraSource::Source(ImageData * data)
 	{
 		Mat* mask;
-		vector<KeyPoint>* blobs;
+		SimpleBlobDetector detector;
 
 		*_cam >> _rawImage;
 		_pipeline->Process(_rawImage);
-		blobs = _pipeline->GetFindBlobsOutput();
-		mask = _pipeline->GetMaskOutput();
+		mask = _pipeline->GetHslThresholdOutput();
+
+		_contours = _pipeline->GetFilterContoursOutput();
 
 		data->SetImageData(mask);
-		data->SetBlobData(blobs);
+		data->SetContours(_contours);
 	}
 
 	CameraSource::CameraSource(double scale, int cameraIndex)

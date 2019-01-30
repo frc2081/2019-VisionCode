@@ -64,11 +64,11 @@ namespace Icarus
 
 static void SetInfo(char* info, Icarus::ImageData* data)
 {
-	vector<KeyPoint>* blobData;
+	vector<vector<Point>>* contours;
 
-	int blobCount;
-	blobData = data->GetBlobData();
-	blobCount = blobData->size();
+	int contourCount;
+	contours = data->GetContours();
+	contourCount = contours->size();
 
-	sprintf(info, "Blobs (%02d)", blobCount);
+	sprintf(info, "Contours (%02d)", contourCount);
 }

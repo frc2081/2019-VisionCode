@@ -12,9 +12,9 @@ namespace Icarus
 		return _imageData;
 	}
 
-	std::vector<cv::KeyPoint>* ImageData::GetBlobData()
+	std::vector<std::vector<cv::Point>>* ImageData::GetContours()
 	{
-		return _blobData;
+		return _contours;
 	}
 
 	void ImageData::SetImageData(cv::Mat* source)
@@ -22,8 +22,8 @@ namespace Icarus
 		_imageData = source;
 	}
 
-	void ImageData::SetBlobData(std::vector<cv::KeyPoint>* blobData)
+	void ImageData::SetContours(std::vector<std::vector<cv::Point>>* contours)
 	{
-		_blobData = blobData;
+		_contours = contours;
 	}
 }
