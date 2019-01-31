@@ -22,19 +22,35 @@ namespace Icarus
 		delete _cam;
 	}
 
-	void CameraSource::Source(ImageData * data)
+	void CameraSource::ReadFromCamera()
 	{
-		Mat* mask;
-		SimpleBlobDetector detector;
-
 		*_cam >> _rawImage;
 		_pipeline->Process(_rawImage);
-		mask = _pipeline->GetHslThresholdOutput();
+		_mask = _pipeline->GetHslThresholdOutput();
 
 		_contours = _pipeline->GetFilterContoursOutput();
+	}
 
-		data->SetImageData(mask);
-		data->SetContours(_contours);
+	void CameraSource::Source(ImageData * data)
+	{	
+		ReadFromCamera();
+		data->SetImageData(GetMask());
+		data->SetContours(GetContours());
+	}
+
+	cv::Mat * CameraSource::GetRawImage()
+	{
+		return &_rawImage;
+	}
+
+	cv::Mat * CameraSource::GetMask()
+	{
+		return _mask;
+	}
+
+	std::vector<std::vector<cv::Point>>* CameraSource::GetContours()
+	{
+		return _contours;
 	}
 
 	CameraSource::CameraSource(double scale, int cameraIndex)

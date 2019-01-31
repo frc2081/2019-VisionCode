@@ -150,6 +150,7 @@
     <ClInclude Include="GripPipeline.h" />
     <ClInclude Include="ImageData.h" />
     <ClInclude Include="IoEntity.h" />
+    <ClInclude Include="RawCameraSource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VisionConfiguration.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="ImageData.cpp" />
     <ClCompile Include="IoEntity.cpp" />
     <ClCompile Include="OpencvTest.cpp" />
+    <ClCompile Include="RawCameraSource.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

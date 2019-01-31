@@ -16,12 +16,17 @@ namespace Icarus
 		grip::GripPipeline* _pipeline;
 		cv::VideoCapture* _cam;
 		cv::Mat _rawImage, *_mask;
-		cv::SimpleBlobDetector* _detector;
+
+		void ReadFromCamera();
 
 	protected:
 		void Init();
 		void Clean();
-		void Source(ImageData* data);
+		virtual void Source(ImageData* data);
+
+		cv::Mat* GetRawImage();
+		cv::Mat* GetMask();
+		std::vector<std::vector<cv::Point>>* GetContours();
 
 	public:
 		CameraSource(double scale, int cameraIndex);
