@@ -16,7 +16,6 @@ namespace Icarus
 	VisionSource * VisionManagerFactory::BuildSource()
 	{
 		char sourceType;
-		int cameraIndex;
 		VisionConfiguration* config = Config();
 
 		sourceType = config->GetSourceType();
