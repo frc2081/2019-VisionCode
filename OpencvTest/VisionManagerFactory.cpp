@@ -19,9 +19,7 @@ namespace Icarus
 		int cameraIndex;
 		VisionConfiguration* config = Config();
 
-		scale = config->GetScale();
 		cameraIndex = config->GetCameraIndex();
-
 		return new RawCameraSource(cameraIndex);
 		//return new CameraSource(scale, cameraIndex);
 	}

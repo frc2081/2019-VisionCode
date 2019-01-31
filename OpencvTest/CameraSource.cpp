@@ -53,9 +53,8 @@ namespace Icarus
 		return _contours;
 	}
 
-	CameraSource::CameraSource(double scale, int cameraIndex)
+	CameraSource::CameraSource(int cameraIndex)
 	{
-		_scale = scale;
 		_cameraIndex = cameraIndex;
 	}
 }

@@ -10,7 +10,6 @@ namespace Icarus
 	{
 	private:
 		int _cameraIndex;
-		double _scale;
 
 		std::vector<std::vector<cv::Point>>* _contours;
 		grip::GripPipeline* _pipeline;
@@ -29,7 +28,7 @@ namespace Icarus
 		std::vector<std::vector<cv::Point>>* GetContours();
 
 	public:
-		CameraSource(double scale, int cameraIndex);
+		CameraSource(int cameraIndex);
 	};
 	
 

@@ -10,7 +10,7 @@ namespace Icarus
 	}
 
 	RawCameraSource::RawCameraSource(int cameraIndex)
-		: CameraSource(1.0, cameraIndex)
+		: CameraSource(cameraIndex)
 	{
 	}
 }

@@ -21,7 +21,7 @@ namespace Icarus
 		cameraIndex = atoi(argv[2]);
 
 		// TODO: Actually implement this.
-		*config = new VisionConfiguration(scale, cameraIndex);
+		*config = new VisionConfiguration(cameraIndex);
 		return 0;
 	}
 
