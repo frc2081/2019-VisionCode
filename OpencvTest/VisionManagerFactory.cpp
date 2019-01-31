@@ -15,13 +15,16 @@ namespace Icarus
 
 	VisionSource * VisionManagerFactory::BuildSource()
 	{
-		double scale;
+		char sourceType;
 		int cameraIndex;
 		VisionConfiguration* config = Config();
 
 		cameraIndex = config->GetCameraIndex();
-		return new RawCameraSource(cameraIndex);
-		//return new CameraSource(scale, cameraIndex);
+		sourceType = config->GetSourceType();
+
+		return sourceType == 'r'
+			? new RawCameraSource(cameraIndex)
+			: new CameraSource(cameraIndex);
 	}
 
 	VisionSink * VisionManagerFactory::BuildSink()

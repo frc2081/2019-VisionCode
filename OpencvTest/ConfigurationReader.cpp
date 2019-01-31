@@ -11,22 +11,22 @@ namespace Icarus
 
 	int ConfigurationReader::Read(int argc, char ** argv, VisionConfiguration ** config)
 	{
-		double scale;
+		char sourceType;
 		int cameraIndex;
 
 		if (argc < 3)
 			return 1;
 		
-		scale = atof(argv[1]);
-		cameraIndex = atoi(argv[2]);
+		cameraIndex = atoi(argv[1]);
+		sourceType = argv[2][0];
 
 		// TODO: Actually implement this.
-		*config = new VisionConfiguration(cameraIndex);
+		*config = new VisionConfiguration(cameraIndex, sourceType);
 		return 0;
 	}
 
 	void ConfigurationReader::DisplayUsage(char** argv)
 	{
-		printf("Usage: '%s' SCALE CAMERAINDEX", argv[0]);
+		printf("Usage: '%s' CAMERAINDEX SOURCETYPE\n\tCAMERAINDEX:  The index of the webcam to use.\n\tSOURCETYPE:   The type of source ('r' for raw, 'm' for masked.)\n", argv[0]);
 	}
 }
