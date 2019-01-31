@@ -9,8 +9,8 @@ namespace Icarus
 		data->SetImageData(GetRawImage());
 	}
 
-	RawCameraSource::RawCameraSource(int cameraIndex)
-		: CameraSource(cameraIndex)
+	RawCameraSource::RawCameraSource(VisionConfiguration * config)
+		: CameraSource(config)
 	{
 	}
 }

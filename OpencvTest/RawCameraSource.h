@@ -11,6 +11,6 @@ namespace Icarus
 		virtual void Source(ImageData* data);
 
 	public:
-		RawCameraSource(int cameraIndex);
+		RawCameraSource(VisionConfiguration* config);
 	};
 }

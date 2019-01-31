@@ -19,12 +19,11 @@ namespace Icarus
 		int cameraIndex;
 		VisionConfiguration* config = Config();
 
-		cameraIndex = config->GetCameraIndex();
 		sourceType = config->GetSourceType();
 
 		return sourceType == 'r'
-			? new RawCameraSource(cameraIndex)
-			: new CameraSource(cameraIndex);
+			? new RawCameraSource(config)
+			: new CameraSource(config);
 	}
 
 	VisionSink * VisionManagerFactory::BuildSink()

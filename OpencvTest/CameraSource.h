@@ -9,7 +9,7 @@ namespace Icarus
 	class CameraSource : public VisionSource
 	{
 	private:
-		int _cameraIndex;
+		VisionConfiguration* _config;
 
 		std::vector<std::vector<cv::Point>>* _contours;
 		grip::GripPipeline* _pipeline;
@@ -28,7 +28,7 @@ namespace Icarus
 		std::vector<std::vector<cv::Point>>* GetContours();
 
 	public:
-		CameraSource(int cameraIndex);
+		CameraSource(VisionConfiguration* config);
 	};
 	
 

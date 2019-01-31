@@ -12,6 +12,8 @@
 #include <string>
 #include <math.h>
 
+#include "VisionConfiguration.h"
+
 namespace grip {
 
 /**
@@ -21,6 +23,8 @@ namespace grip {
 */
 class GripPipeline {
 	private:
+		Icarus::VisionConfiguration* _config;
+
 		cv::Mat hslThresholdOutput;
 		std::vector<std::vector<cv::Point> > findContoursOutput;
 		std::vector<std::vector<cv::Point> > filterContoursOutput;
@@ -29,7 +33,7 @@ class GripPipeline {
 		void filterContours(std::vector<std::vector<cv::Point> > &, double , double , double , double , double , double , double [], double , double , double , double , std::vector<std::vector<cv::Point> > &);
 
 	public:
-		GripPipeline();
+		GripPipeline(Icarus::VisionConfiguration* config);
 		void Process(cv::Mat& source0);
 		cv::Mat* GetHslThresholdOutput();
 		std::vector<std::vector<cv::Point> >* GetFindContoursOutput();

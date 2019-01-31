@@ -13,15 +13,30 @@ namespace Icarus
 	{
 		char sourceType;
 		int cameraIndex;
+		int hueLow, hueHigh,
+			satLow, satHigh,
+			lumLow, lumHigh;
 
-		if (argc < 3)
+		if (argc < 9)
 			return 1;
 		
 		cameraIndex = atoi(argv[1]);
 		sourceType = argv[2][0];
 
+		hueLow = atoi(argv[3]);
+		hueHigh = atoi(argv[4]);
+
+		satLow = atoi(argv[5]);
+		satHigh = atoi(argv[6]);
+
+		lumLow = atoi(argv[7]);
+		lumHigh = atoi(argv[8]);
+
 		// TODO: Actually implement this.
-		*config = new VisionConfiguration(cameraIndex, sourceType);
+		*config = new VisionConfiguration(cameraIndex, sourceType,
+			hueLow, hueHigh,
+			satLow, satHigh,
+			lumLow, lumHigh);
 		return 0;
 	}
 

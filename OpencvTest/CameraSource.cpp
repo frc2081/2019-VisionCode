@@ -10,8 +10,8 @@ namespace Icarus
 {
 	void CameraSource::Init()
 	{
-		_pipeline = new GripPipeline();
-		_cam = new VideoCapture(_cameraIndex);
+		_pipeline = new GripPipeline(_config);
+		_cam = new VideoCapture(_config->GetCameraIndex());
 	}
 
 	void CameraSource::Clean()
@@ -53,8 +53,8 @@ namespace Icarus
 		return _contours;
 	}
 
-	CameraSource::CameraSource(int cameraIndex)
+	CameraSource::CameraSource(VisionConfiguration * config)
 	{
-		_cameraIndex = cameraIndex;
+		_config = config;
 	}
 }

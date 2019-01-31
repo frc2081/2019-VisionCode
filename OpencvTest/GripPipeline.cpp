@@ -3,18 +3,22 @@
 
 namespace grip {
 
-GripPipeline::GripPipeline() {
-}
+
 /**
 * Runs an iteration of the pipeline and updates outputs.
 */
+GripPipeline::GripPipeline(Icarus::VisionConfiguration * config)
+{
+	_config = config;
+}
+
 void GripPipeline::Process(cv::Mat& source0){
 	//Step HSL_Threshold0:
 	//input
 	cv::Mat hslThresholdInput = source0;
-	double hslThresholdHue[] = {67.98561575601427, 89.8976148273351};
-	double hslThresholdSaturation[] = {204.8561067246705, 255.0};
-	double hslThresholdLuminance[] = {221.67266697334728, 255.0};
+	double hslThresholdHue[] = {_config->GetHueLow(), _config->GetHueHigh()};
+	double hslThresholdSaturation[] = {_config->GetSatLow(), _config->GetSatHigh()};
+	double hslThresholdLuminance[] = {_config->GetLumLow(), _config->GetLumHigh()};
 	hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, this->hslThresholdOutput);
 	//Step Find_Contours0:
 	//input
