@@ -120,6 +120,9 @@
     <ClInclude Include="RawCameraSource.h">
       <Filter>Header Files\IO\Sources</Filter>
     </ClInclude>
+    <ClInclude Include="ContourWriter.h">
+      <Filter>Header Files\IO\Sinks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpencvTest.cpp">
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="RawCameraSource.cpp">
       <Filter>Source Files\IO\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ContourWriter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
