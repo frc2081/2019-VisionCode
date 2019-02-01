@@ -117,6 +117,9 @@
     <ClInclude Include="VisionManagerFactory.h">
       <Filter>Header Files\Factories</Filter>
     </ClInclude>
+    <ClInclude Include="RawCameraSource.h">
+      <Filter>Header Files\IO\Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpencvTest.cpp">
@@ -157,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="VisionManagerFactory.cpp">
       <Filter>Source Files\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="RawCameraSource.cpp">
+      <Filter>Source Files\IO\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

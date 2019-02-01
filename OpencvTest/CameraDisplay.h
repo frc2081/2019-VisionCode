@@ -6,6 +6,9 @@ namespace Icarus
 {
 	class CameraDisplay : public VisionSink
 	{
+	private:
+		void Decorate(ImageData* source);
+
 	protected:
 		const char* _windowName;
 

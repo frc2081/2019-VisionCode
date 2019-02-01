@@ -2,108 +2,76 @@
 #include "GripPipeline.h"
 
 namespace grip {
-	GripPipeline::GripPipeline(double scale) {
-		_matScale = scale;
-	}
-	/**
-	* Runs an iteration of the pipeline and updates outputs.
-	*/
-	void GripPipeline::Process(cv::Mat& source0) {
-		//Step CV_resize0:
-		//input
-		cv::Mat cvResizeSrc = source0;
-		cv::Size cvResizeDsize(0, 0);
-		double cvResizeFx = _matScale;  // default Double
-		double cvResizeFy = _matScale;  // default Double
-		int cvResizeInterpolation = cv::INTER_LINEAR;
-		cvResize(cvResizeSrc, cvResizeDsize, cvResizeFx, cvResizeFy, cvResizeInterpolation, this->cvResizeOutput);
-		//Step HSL_Threshold0:
-		//input
-		cv::Mat hslThresholdInput = cvResizeOutput;
-		double hslThresholdHue[] = { 15.107911610774856, 44.84641345287753 };
-		double hslThresholdSaturation[] = { 36.690647482014384, 99.79522460963541 };
-		double hslThresholdLuminance[] = { 137.58992587062096, 255.0 };
-		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, this->hslThresholdOutput);
-		//Step CV_erode0:
-		//input
-		cv::Mat cvErodeSrc = hslThresholdOutput;
-		cv::Mat cvErodeKernel;
-		cv::Point cvErodeAnchor(-1, -1);
-		double cvErodeIterations = 0.0;  // default Double
-		int cvErodeBordertype = cv::BORDER_CONSTANT;
-		cv::Scalar cvErodeBordervalue(-1);
-		cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, this->cvErodeOutput);
-		//Step Mask0:
-		//input
-		cv::Mat maskInput = cvResizeOutput;
-		cv::Mat maskMask = cvErodeOutput;
-		mask(maskInput, maskMask, this->maskOutput);
-		//Step Find_Blobs0:
-		//input
-		cv::Mat findBlobsInput = maskOutput;
-		double findBlobsMinArea = 1.0;  // default Double
-		double findBlobsCircularity[] = { 0.0, 1.0 };
-		bool findBlobsDarkBlobs = false;  // default Boolean
-		findBlobs(findBlobsInput, findBlobsMinArea, findBlobsCircularity, findBlobsDarkBlobs, this->findBlobsOutput);
-	}
 
-	/**
-	* This method is a generated getter for the output of a CV_resize.
-	* @return Mat output from CV_resize.
-	*/
-	cv::Mat* GripPipeline::GetCvResizeOutput() {
-		return &(this->cvResizeOutput);
-	}
-	/**
-	* This method is a generated getter for the output of a HSL_Threshold.
-	* @return Mat output from HSL_Threshold.
-	*/
-	cv::Mat* GripPipeline::GetHslThresholdOutput() {
-		return &(this->hslThresholdOutput);
-	}
-	/**
-	* This method is a generated getter for the output of a CV_erode.
-	* @return Mat output from CV_erode.
-	*/
-	cv::Mat* GripPipeline::GetCvErodeOutput() {
-		return &(this->cvErodeOutput);
-	}
-	/**
-	* This method is a generated getter for the output of a Mask.
-	* @return Mat output from Mask.
-	*/
-	cv::Mat* GripPipeline::GetMaskOutput() {
-		return &(this->maskOutput);
-	}
-	/**
-	* This method is a generated getter for the output of a Find_Blobs.
-	* @return BlobsReport output from Find_Blobs.
-	*/
-	std::vector<cv::KeyPoint>* GripPipeline::GetFindBlobsOutput() {
-		return &(this->findBlobsOutput);
-	}
-	/**
-	* Resizes an Image.
-	* @param src The image to resize.
-	* @param dSize size to set the image.
-	* @param fx scale factor along X axis.
-	* @param fy scale factor along Y axis.
-	* @param interpolation type of interpolation to use.
-	* @param dst output image.
-	*/
-	void GripPipeline::cvResize(cv::Mat &src, cv::Size &dSize, double fx, double fy, int interpolation, cv::Mat &dst) {
-		cv::resize(src, dst, dSize, fx, fy, interpolation);
-	}
 
+/**
+* Runs an iteration of the pipeline and updates outputs.
+*/
+GripPipeline::GripPipeline(Icarus::VisionConfiguration * config)
+{
+	_config = config;
+}
+
+void GripPipeline::Process(cv::Mat& source0){
+	//Step HSL_Threshold0:
+	//input
+	cv::Mat hslThresholdInput = source0;
+	double hslThresholdHue[] = {_config->GetHueLow(), _config->GetHueHigh()};
+	double hslThresholdSaturation[] = {_config->GetSatLow(), _config->GetSatHigh()};
+	double hslThresholdLuminance[] = {_config->GetLumLow(), _config->GetLumHigh()};
+	hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, this->hslThresholdOutput);
+	//Step Find_Contours0:
+	//input
+	cv::Mat findContoursInput = hslThresholdOutput;
+	bool findContoursExternalOnly = false;  // default Boolean
+	findContours(findContoursInput, findContoursExternalOnly, this->findContoursOutput);
+	//Step Filter_Contours0:
+	//input
+	std::vector<std::vector<cv::Point> > filterContoursContours = findContoursOutput;
+	double filterContoursMinArea = 40.0;  // default Double
+	double filterContoursMinPerimeter = 15.0;  // default Double
+	double filterContoursMinWidth = 5.0;  // default Double
+	double filterContoursMaxWidth = 1000.0;  // default Double
+	double filterContoursMinHeight = 5.0;  // default Double
+	double filterContoursMaxHeight = 1000.0;  // default Double
+	double filterContoursSolidity[] = {0, 100};
+	double filterContoursMaxVertices = 1000000.0;  // default Double
+	double filterContoursMinVertices = 0.0;  // default Double
+	double filterContoursMinRatio = 0.0;  // default Double
+	double filterContoursMaxRatio = 1000.0;  // default Double
+	filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, this->filterContoursOutput);
+}
+
+/**
+ * This method is a generated getter for the output of a HSL_Threshold.
+ * @return Mat output from HSL_Threshold.
+ */
+cv::Mat* GripPipeline::GetHslThresholdOutput(){
+	return &(this->hslThresholdOutput);
+}
+/**
+ * This method is a generated getter for the output of a Find_Contours.
+ * @return ContoursReport output from Find_Contours.
+ */
+std::vector<std::vector<cv::Point> >* GripPipeline::GetFindContoursOutput(){
+	return &(this->findContoursOutput);
+}
+/**
+ * This method is a generated getter for the output of a Filter_Contours.
+ * @return ContoursReport output from Filter_Contours.
+ */
+std::vector<std::vector<cv::Point> >* GripPipeline::GetFilterContoursOutput(){
+	return &(this->filterContoursOutput);
+}
 	/**
-	* Segment an image based on hue, saturation, and luminance ranges.
-	*
-	* @param input The image on which to perform the HSL threshold.
-	* @param hue The min and max hue.
-	* @param sat The min and max saturation.
-	* @param lum The min and max luminance.
-	* @param output The image in which to store the output.
-	*/
+	 * Segment an image based on hue, saturation, and luminance ranges.
+	 *
+	 * @param input The image on which to perform the HSL threshold.
+	 * @param hue The min and max hue.
+	 * @param sat The min and max saturation.
+	 * @param lum The min and max luminance.
+	 * @param output The image in which to store the output.
+	 */
 	//void hslThreshold(Mat *input, double hue[], double sat[], double lum[], Mat *out) {
 	void GripPipeline::hslThreshold(cv::Mat &input, double hue[], double sat[], double lum[], cv::Mat &out) {
 		cv::cvtColor(input, out, cv::COLOR_BGR2HLS);
@@ -111,60 +79,58 @@ namespace grip {
 	}
 
 	/**
-	* Expands area of lower value in an image.
-	* @param src the Image to erode.
-	* @param kernel the kernel for erosion.
-	* @param anchor the center of the kernel.
-	* @param iterations the number of times to perform the erosion.
-	* @param borderType pixel extrapolation method.
-	* @param borderValue value to be used for a constant border.
-	* @param dst Output Image.
-	*/
-	void GripPipeline::cvErode(cv::Mat &src, cv::Mat &kernel, cv::Point &anchor, double iterations, int borderType, cv::Scalar &borderValue, cv::Mat &dst) {
-		cv::erode(src, dst, kernel, anchor, (int)iterations, borderType, borderValue);
+	 * Finds contours in an image.
+	 *
+	 * @param input The image to find contours in.
+	 * @param externalOnly if only external contours are to be found.
+	 * @param contours vector of contours to put contours in.
+	 */
+	void GripPipeline::findContours(cv::Mat &input, bool externalOnly, std::vector<std::vector<cv::Point> > &contours) {
+		std::vector<cv::Vec4i> hierarchy;
+		contours.clear();
+		int mode = externalOnly ? cv::RETR_EXTERNAL : cv::RETR_LIST;
+		int method = cv::CHAIN_APPROX_SIMPLE;
+		cv::findContours(input, contours, hierarchy, mode, method);
 	}
+
 
 	/**
-	* Filter out an area of an image using a binary mask.
-	*
-	* @param input The image on which the mask filters.
-	* @param mask The binary image that is used to filter.
-	* @param output The image in which to store the output.
-	*/
-	void GripPipeline::mask(cv::Mat &input, cv::Mat &mask, cv::Mat &output) {
-		mask.convertTo(mask, CV_8UC1);
-		cv::bitwise_xor(output, output, output);
-		input.copyTo(output, mask);
+	 * Filters through contours.
+	 * @param inputContours is the input vector of contours.
+	 * @param minArea is the minimum area of a contour that will be kept.
+	 * @param minPerimeter is the minimum perimeter of a contour that will be kept.
+	 * @param minWidth minimum width of a contour.
+	 * @param maxWidth maximum width.
+	 * @param minHeight minimum height.
+	 * @param maxHeight  maximimum height.
+	 * @param solidity the minimum and maximum solidity of a contour.
+	 * @param minVertexCount minimum vertex Count of the contours.
+	 * @param maxVertexCount maximum vertex Count.
+	 * @param minRatio minimum ratio of width to height.
+	 * @param maxRatio maximum ratio of width to height.
+	 * @param output vector of filtered contours.
+	 */
+	void GripPipeline::filterContours(std::vector<std::vector<cv::Point> > &inputContours, double minArea, double minPerimeter, double minWidth, double maxWidth, double minHeight, double maxHeight, double solidity[], double maxVertexCount, double minVertexCount, double minRatio, double maxRatio, std::vector<std::vector<cv::Point> > &output) {
+		std::vector<cv::Point> hull;
+		output.clear();
+		for (std::vector<cv::Point> contour: inputContours) {
+			cv::Rect bb = boundingRect(contour);
+			if (bb.width < minWidth || bb.width > maxWidth) continue;
+			if (bb.height < minHeight || bb.height > maxHeight) continue;
+			double area = cv::contourArea(contour);
+			if (area < minArea) continue;
+			if (arcLength(contour, true) < minPerimeter) continue;
+			cv::convexHull(cv::Mat(contour, true), hull);
+			double solid = 100 * area / cv::contourArea(hull);
+			if (solid < solidity[0] || solid > solidity[1]) continue;
+			if (contour.size() < minVertexCount || contour.size() > maxVertexCount)	continue;
+			double ratio = (double) bb.width / (double) bb.height;
+			if (ratio < minRatio || ratio > maxRatio) continue;
+			output.push_back(contour);
+		}
 	}
 
-	/**
-	* Detects groups of pixels in an image.
-	*
-	* @param input The image on which to perform the find blobs.
-	* @param minArea The minimum size of a blob that will be found.
-	* @param circularity The minimum and maximum circularity of blobs that will be found.
-	* @param darkBlobs The boolean that determines if light or dark blobs are found.
-	* @param blobList The output where the MatOfKeyPoint is stored.
-	*/
-	//void findBlobs(Mat *input, double *minArea, double circularity[2],
-	//bool *darkBlobs, vector<KeyPoint> *blobList) {
-	void GripPipeline::findBlobs(cv::Mat &input, double minArea, double circularity[], bool darkBlobs, std::vector<cv::KeyPoint> &blobList) {
-		blobList.clear();
-		cv::SimpleBlobDetector::Params params;
-		params.filterByColor = 1;
-		params.blobColor = (darkBlobs ? 0 : 255);
-		params.minThreshold = 10;
-		params.maxThreshold = 220;
-		params.filterByArea = true;
-		params.minArea = minArea;
-		params.filterByCircularity = true;
-		params.minCircularity = circularity[0];
-		params.maxCircularity = circularity[1];
-		params.filterByConvexity = false;
-		params.filterByInertia = false;
-		cv::Ptr<cv::SimpleBlobDetector> detector = cv::SimpleBlobDetector::create(params);
-		//detector->detect(input, blobList);
-	}
-}
 
-// end grip namespace
+
+} // end grip namespace
+

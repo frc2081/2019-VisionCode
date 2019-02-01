@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CameraSource.h"
+#include "GripPipeline.h"
 
 using namespace std;
 using namespace grip;
@@ -9,8 +10,8 @@ namespace Icarus
 {
 	void CameraSource::Init()
 	{
-		_pipeline = new GripPipeline(_scale);
-		_cam = new VideoCapture(_cameraIndex);
+		_pipeline = new GripPipeline(_config);
+		_cam = new VideoCapture(_config->GetCameraIndex());
 	}
 
 	void CameraSource::Clean()
@@ -21,21 +22,39 @@ namespace Icarus
 		delete _cam;
 	}
 
-	void CameraSource::Source(ImageData * data)
+	void CameraSource::ReadFromCamera()
 	{
-		vector<KeyPoint>* _blobs;
-
 		*_cam >> _rawImage;
 		_pipeline->Process(_rawImage);
-		_blobs = _pipeline->GetFindBlobsOutput();
+		_mask = _pipeline->GetHslThresholdOutput();
 
-		data->SetImageData(_pipeline->GetMaskOutput());
-		data->SetBlobData(_pipeline->GetFindBlobsOutput());
+		_contours = _pipeline->GetFilterContoursOutput();
 	}
 
-	CameraSource::CameraSource(double scale, int cameraIndex)
+	void CameraSource::Source(ImageData * data)
+	{	
+		ReadFromCamera();
+		data->SetImageData(GetMask());
+		data->SetContours(GetContours());
+	}
+
+	cv::Mat * CameraSource::GetRawImage()
 	{
-		_scale = scale;
-		_cameraIndex = cameraIndex;
+		return &_rawImage;
+	}
+
+	cv::Mat * CameraSource::GetMask()
+	{
+		return _mask;
+	}
+
+	std::vector<std::vector<cv::Point>>* CameraSource::GetContours()
+	{
+		return _contours;
+	}
+
+	CameraSource::CameraSource(VisionConfiguration * config)
+	{
+		_config = config;
 	}
 }

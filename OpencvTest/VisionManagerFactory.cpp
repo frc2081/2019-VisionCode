@@ -4,6 +4,7 @@
 
 #include "CameraSource.h"
 #include "CameraDisplay.h"
+#include "RawCameraSource.h"
 
 namespace Icarus
 {
@@ -14,14 +15,14 @@ namespace Icarus
 
 	VisionSource * VisionManagerFactory::BuildSource()
 	{
-		double scale;
-		int cameraIndex;
+		char sourceType;
 		VisionConfiguration* config = Config();
 
-		scale = config->GetScale();
-		cameraIndex = config->GetCameraIndex();
+		sourceType = config->GetSourceType();
 
-		return new CameraSource(scale, cameraIndex);
+		return sourceType == 'r'
+			? new RawCameraSource(config)
+			: new CameraSource(config);
 	}
 
 	VisionSink * VisionManagerFactory::BuildSink()

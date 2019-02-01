@@ -8,14 +8,14 @@ namespace Icarus
 	{
 	private:
 		cv::Mat* _imageData;
-		std::vector<cv::KeyPoint>* _blobData;
+		std::vector<std::vector<cv::Point>>* _contours;
 
 	public:
 		ImageData();
 		cv::Mat* GetImageData();
-		std::vector<cv::KeyPoint>* GetBlobData();
+		std::vector<std::vector<cv::Point>>* GetContours();
 
 		void SetImageData(cv::Mat* source);
-		void SetBlobData(std::vector<cv::KeyPoint>* blobData);
+		void SetContours(std::vector<std::vector<cv::Point>>* contours);
 	};
 }
