@@ -168,7 +168,7 @@
       <Filter>Source Files\IO\Sources</Filter>
     </ClCompile>
     <ClCompile Include="ContourWriter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\IO\Sinks</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

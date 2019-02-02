@@ -1,23 +1,31 @@
 #include "stdafx.h"
 #include "ContourWriter.h"
+#include <thread>
+#include <chrono>
+
 using namespace std;
 using namespace cv;
+using namespace std::chrono;
+
 namespace Icarus
 {
 	void ContourWriter::Init()
 	{
-
 	}
+
 	void ContourWriter::Clean()
 	{
 	}
+
 	void ContourWriter::Sink(ImageData * source)
 	{
+		WriteVisionData(GetVisionData(source));
 	}
+
 	ContourWriter::ContourWriter()
 	{
-
 	}
+
 	VisionState ContourWriter::GetState(ImageData * source)
 	{
 		vector<vector<Point>>* contours = source->GetContours();
@@ -37,6 +45,7 @@ namespace Icarus
 			return TooManyContoursDetected;
 		}
 	}
+
 	ContourWriter::VisionTargetData ContourWriter::GetTargetData(std::vector<cv::Point> contour, int ImageCenter)
 	{
 		Rect bound = boundingRect(contour);
@@ -46,6 +55,7 @@ namespace Icarus
 		Data.TargetDistFromCenter = (bound.x + (bound.width / 2)) - ImageCenter;
 		return Data;
 	}
+
 	ContourWriter::VisionData ContourWriter::GetVisionData(ImageData * source)
 	{
 		if (GetState(source) != TwoContoursDetected) {
@@ -59,13 +69,18 @@ namespace Icarus
 		Data.RightTarget = GetTargetData(contours->at(1), center);
 		return Data;
 	}
+
 	void ContourWriter::WriteVisionData(VisionData Data)
 	{
+		const int waitInMilliseconds = 500;
+		this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
+
 		if (Data.IsValid) {
-			printf("[height: %d, width: %d, dist: %d, height: %d, width: %d, dist: %d]\n", 
+			printf("[height: %d, width: %d, dist: %d] [height: %d, width: %d, dist: %d]\n", 
 			Data.LeftTarget.TargetHeight,
 			Data.LeftTarget.TargetWidth,
 			Data.LeftTarget.TargetDistFromCenter,
+
 			Data.RightTarget.TargetHeight,
 			Data.RightTarget.TargetWidth,
 			Data.RightTarget.TargetDistFromCenter);
@@ -73,24 +88,26 @@ namespace Icarus
 		else
 		{
 			printf("is not valid\n");
-		}
-	
+		}	
 	}
+
 	ContourWriter::VisionData ContourWriter::VisionData::BadData()
 	{
 		ContourWriter::VisionData Bad;
 		Bad.LeftTarget = ContourWriter::VisionTargetData::BadData();
 		Bad.RightTarget = ContourWriter::VisionTargetData::BadData();
 		Bad.IsValid = false;
-		return Bad;
 
+		return Bad;
 	}
+
 	ContourWriter::VisionTargetData ContourWriter::VisionTargetData::BadData()
 	{
 		ContourWriter::VisionTargetData Bad;
 		Bad.TargetDistFromCenter = -1;
 		Bad.TargetHeight = -1;
 		Bad.TargetWidth = -1;
+
 		return Bad;
 	}
 }

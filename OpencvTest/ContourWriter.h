@@ -13,7 +13,8 @@ namespace Icarus
 		TwoContoursDetected,
 		TooManyContoursDetected
 	};
-	class ContourWriter :public VisionSink {
+
+	class ContourWriter : public VisionSink {
 
 	protected:
 		void Init();
