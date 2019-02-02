@@ -148,6 +148,7 @@
     <ClInclude Include="CameraSource.h" />
     <ClInclude Include="ConfigurationReader.h" />
     <ClInclude Include="GripPipeline.h" />
+    <ClInclude Include="ContourWriter.h" />
     <ClInclude Include="ImageData.h" />
     <ClInclude Include="IoEntity.h" />
     <ClInclude Include="RawCameraSource.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="CameraDisplay.cpp" />
     <ClCompile Include="CameraSource.cpp" />
     <ClCompile Include="ConfigurationReader.cpp" />
+    <ClCompile Include="ContourWriter.cpp" />
     <ClCompile Include="GripPipeline.cpp" />
     <ClCompile Include="ImageData.cpp" />
     <ClCompile Include="IoEntity.cpp" />
