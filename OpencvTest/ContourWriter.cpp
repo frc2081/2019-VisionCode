@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ContourWriter.h"
-
+using namespace std;
+using namespace cv;
 namespace Icarus
 {
 	void ContourWriter::Init()
@@ -19,6 +20,77 @@ namespace Icarus
 	}
 	VisionState ContourWriter::GetState(ImageData * source)
 	{
-		return VisionState();
+		vector<vector<Point>>* contours = source->GetContours();
+		int ContourNum = contours->size();
+		switch (ContourNum)
+		{
+		case  0:
+			return NoContoursDetected;
+
+		case 1:
+			return OneContourDetected;
+
+		case 2:
+			return TwoContoursDetected;
+
+		default:
+			return TooManyContoursDetected;
+		}
+	}
+	ContourWriter::VisionTargetData ContourWriter::GetTargetData(std::vector<cv::Point> contour, int ImageCenter)
+	{
+		Rect bound = boundingRect(contour);
+		ContourWriter::VisionTargetData Data;
+		Data.TargetHeight = bound.height;
+		Data.TargetWidth = bound.width;
+		Data.TargetDistFromCenter = (bound.x + (bound.width / 2)) - ImageCenter;
+		return Data;
+	}
+	ContourWriter::VisionData ContourWriter::GetVisionData(ImageData * source)
+	{
+		if (GetState(source) != TwoContoursDetected) {
+			return ContourWriter::VisionData::BadData();
+		}
+		vector<vector<Point>>* contours = source->GetContours();
+		ContourWriter::VisionData Data;
+		Data.IsValid = true;
+		int center = source->GetImageData()->cols / 2;
+		Data.LeftTarget = GetTargetData(contours->at(0), center);
+		Data.RightTarget = GetTargetData(contours->at(1), center);
+		return Data;
+	}
+	void ContourWriter::WriteVisionData(VisionData Data)
+	{
+		if (Data.IsValid) {
+			printf("[height: %d, width: %d, dist: %d, height: %d, width: %d, dist: %d]\n", 
+			Data.LeftTarget.TargetHeight,
+			Data.LeftTarget.TargetWidth,
+			Data.LeftTarget.TargetDistFromCenter,
+			Data.RightTarget.TargetHeight,
+			Data.RightTarget.TargetWidth,
+			Data.RightTarget.TargetDistFromCenter);
+		}
+		else
+		{
+			printf("is not valid\n");
+		}
+	
+	}
+	ContourWriter::VisionData ContourWriter::VisionData::BadData()
+	{
+		ContourWriter::VisionData Bad;
+		Bad.LeftTarget = ContourWriter::VisionTargetData::BadData();
+		Bad.RightTarget = ContourWriter::VisionTargetData::BadData();
+		Bad.IsValid = false;
+		return Bad;
+
+	}
+	ContourWriter::VisionTargetData ContourWriter::VisionTargetData::BadData()
+	{
+		ContourWriter::VisionTargetData Bad;
+		Bad.TargetDistFromCenter = -1;
+		Bad.TargetHeight = -1;
+		Bad.TargetWidth = -1;
+		return Bad;
 	}
 }
