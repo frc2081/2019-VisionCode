@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "VisionManager.h"
-#include <opencv2\opencv.hpp>
-#include <opencv2\imgcodecs.hpp>
 
 using namespace std;
 using namespace grip;
