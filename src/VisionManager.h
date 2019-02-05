@@ -1,5 +1,5 @@
 #pragma once
-#include <opencv2\opencv.hpp>
+#include <opencv2/opencv.hpp>
 #include "ImageData.h"
 #include "GripPipeline.h"
 #include "VisionConfiguration.h"
