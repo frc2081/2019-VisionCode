@@ -1,7 +1,7 @@
 #pragma once
 
 #include "VisionSink.h"
-
+#include <networktables/NetworkTableInstance.h>
 
 namespace Icarus
 {
@@ -20,6 +20,7 @@ namespace Icarus
 		void Init();
 		void Clean();
 		void Sink(ImageData* source);
+    nt::NetworkTableInstance* GetNetworkTables();
 
 	public:
 		ContourWriter();
@@ -41,6 +42,8 @@ namespace Icarus
 			bool IsValid;
 			static ContourWriter::VisionData BadData();
 		};
+
+    nt::NetworkTableInstance _networkTables;
 
 		VisionState GetState(ImageData* source);
 		

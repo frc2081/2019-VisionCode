@@ -11,10 +11,12 @@ namespace Icarus
 {
 	void ContourWriter::Init()
 	{
+    _networkTables.StartClientTeam(2081);
 	}
 
 	void ContourWriter::Clean()
 	{
+    _networkTables.StopClient();
 	}
 
 	void ContourWriter::Sink(ImageData * source)
@@ -22,8 +24,14 @@ namespace Icarus
 		WriteVisionData(GetVisionData(source));
 	}
 
+  nt::NetworkTableInstance* ContourWriter::GetNetworkTables()
+  {
+    return &_networkTables;
+  }
+
 	ContourWriter::ContourWriter()
 	{
+    _networkTables = nt::NetworkTableInstance::GetDefault();
 	}
 
 	VisionState ContourWriter::GetState(ImageData * source)
@@ -97,7 +105,6 @@ namespace Icarus
 		Bad.LeftTarget = ContourWriter::VisionTargetData::BadData();
 		Bad.RightTarget = ContourWriter::VisionTargetData::BadData();
 		Bad.IsValid = false;
-
 		return Bad;
 	}
 
