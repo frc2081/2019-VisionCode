@@ -6,17 +6,20 @@
 using namespace std;
 using namespace cv;
 using namespace std::chrono;
+using namespace nt;
 
 namespace Icarus
 {
 	void ContourWriter::Init()
 	{
-    _networkTables.StartClientTeam(2081);
+    _networkTableInstance.StartClientTeam(2081);
+    _networkTable = _networkTableInstance.GetTable("datatable");
 	}
 
 	void ContourWriter::Clean()
 	{
-    _networkTables.StopClient();
+    _networkTableInstance.StopClient();
+    _networkTable = NULL;
 	}
 
 	void ContourWriter::Sink(ImageData * source)
@@ -24,14 +27,14 @@ namespace Icarus
 		WriteVisionData(GetVisionData(source));
 	}
 
-  nt::NetworkTableInstance* ContourWriter::GetNetworkTables()
+  shared_ptr<NetworkTable> ContourWriter::GetNetworkTable()
   {
-    return &_networkTables;
+    return _networkTable;
   }
 
 	ContourWriter::ContourWriter()
 	{
-    _networkTables = nt::NetworkTableInstance::GetDefault();
+    _networkTableInstance = nt::NetworkTableInstance::GetDefault();
 	}
 
 	VisionState ContourWriter::GetState(ImageData * source)

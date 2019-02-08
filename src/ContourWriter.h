@@ -2,6 +2,7 @@
 
 #include "VisionSink.h"
 #include <networktables/NetworkTableInstance.h>
+#include <networktables/NetworkTable.h>
 
 namespace Icarus
 {
@@ -20,7 +21,7 @@ namespace Icarus
 		void Init();
 		void Clean();
 		void Sink(ImageData* source);
-    nt::NetworkTableInstance* GetNetworkTables();
+    std::shared_ptr<nt::NetworkTable> GetNetworkTable();
 
 	public:
 		ContourWriter();
@@ -43,7 +44,8 @@ namespace Icarus
 			static ContourWriter::VisionData BadData();
 		};
 
-    nt::NetworkTableInstance _networkTables;
+    nt::NetworkTableInstance _networkTableInstance;
+    std::shared_ptr<nt::NetworkTable> _networkTable;
 
 		VisionState GetState(ImageData* source);
 		
