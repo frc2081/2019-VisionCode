@@ -86,20 +86,15 @@ namespace Icarus
 		const int waitInMilliseconds = 500;
 		this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
 
-		if (Data.IsValid) {
-			printf("[height: %d, width: %d, dist: %d] [height: %d, width: %d, dist: %d]\n", 
-			Data.LeftTarget.TargetHeight,
-			Data.LeftTarget.TargetWidth,
-			Data.LeftTarget.TargetDistFromCenter,
+			shared_ptr<NetworkTable> table = GetNetworkTable();
+			table->PutNumber("LeftTargetHeight", Data.LeftTarget.TargetHeight);
+			table->PutNumber("RightTagetHeight", Data.RightTarget.TargetHeight);
+			table->PutNumber("LeftTargetWidth", Data.LeftTarget.TargetWidth);
+			table->PutNumber("RightTargetWidth", Data.RightTarget.TargetWidth);
+			table->PutNumber("LeftTargetDistFromCenter", Data.LeftTarget.TargetDistFromCenter);
+			table->PutNumber("RightTargetDistFromCenter", Data.RightTarget.TargetDistFromCenter);
+			table->PutBoolean("TargetDataValid", Data.IsValid);
 
-			Data.RightTarget.TargetHeight,
-			Data.RightTarget.TargetWidth,
-			Data.RightTarget.TargetDistFromCenter);
-		}
-		else
-		{
-			printf("is not valid\n");
-		}	
 	}
 
 	ContourWriter::VisionData ContourWriter::VisionData::BadData()
