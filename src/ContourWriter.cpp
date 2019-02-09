@@ -32,8 +32,15 @@ namespace Icarus
     return _networkTable;
   }
 
+  int ContourWriter::GetHeartbeat()
+  {
+    const int maxHeart = 32000;
+    return _heartbeat = _heartbeat++ % maxHeart;
+  }
+
 	ContourWriter::ContourWriter()
 	{
+    _heartbeat = 0;
     _networkTableInstance = nt::NetworkTableInstance::GetDefault();
 	}
 
@@ -87,14 +94,18 @@ namespace Icarus
 		this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
 
 			shared_ptr<NetworkTable> table = GetNetworkTable();
+
+      // Target Data
 			table->PutNumber("LeftTargetHeight", Data.LeftTarget.TargetHeight);
 			table->PutNumber("RightTagetHeight", Data.RightTarget.TargetHeight);
 			table->PutNumber("LeftTargetWidth", Data.LeftTarget.TargetWidth);
 			table->PutNumber("RightTargetWidth", Data.RightTarget.TargetWidth);
 			table->PutNumber("LeftTargetDistFromCenter", Data.LeftTarget.TargetDistFromCenter);
 			table->PutNumber("RightTargetDistFromCenter", Data.RightTarget.TargetDistFromCenter);
-			table->PutBoolean("TargetDataValid", Data.IsValid);
 
+      // Metadata
+			table->PutBoolean("TargetDataValid", Data.IsValid);
+      table->PutNumber("VisionHeartbeat", GetHeartbeat());
 	}
 
 	ContourWriter::VisionData ContourWriter::VisionData::BadData()

@@ -22,6 +22,7 @@ namespace Icarus
 		void Clean();
 		void Sink(ImageData* source);
     std::shared_ptr<nt::NetworkTable> GetNetworkTable();
+    int GetHeartbeat();
 
 	public:
 		ContourWriter();
@@ -46,6 +47,7 @@ namespace Icarus
 
     nt::NetworkTableInstance _networkTableInstance;
     std::shared_ptr<nt::NetworkTable> _networkTable;
+    int _heartbeat;
 
 		VisionState GetState(ImageData* source);
 		
