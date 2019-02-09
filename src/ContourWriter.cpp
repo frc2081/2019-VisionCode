@@ -83,8 +83,10 @@ namespace Icarus
 		ContourWriter::VisionData Data;
 		Data.IsValid = true;
 		int center = source->GetImageData()->cols / 2;
-		Data.LeftTarget = GetTargetData(contours->at(0), center);
-		Data.RightTarget = GetTargetData(contours->at(1), center);
+		vector<Point> Left, Right;
+		GetTargetVectors(source, &Left, &Right);
+		Data.LeftTarget = GetTargetData(Left, center);
+		Data.RightTarget = GetTargetData(Right, center);
 		return Data;
 	}
 
@@ -125,5 +127,21 @@ namespace Icarus
 		Bad.TargetWidth = -1;
 
 		return Bad;
+
+
 	}
+
+	void ContourWriter::GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right){
+			vector<vector<Point>>* contours = source->GetContours();
+			vector<Point> a = contours->at(0);
+			vector<Point>b = contours->at(1);
+			if(a.at(0).x < b.at(0).x){
+				*Left = a;
+				*Right = b;
+			}else{
+				*Left = b;
+				*Right = a;
+			}
+			
+			}
 }

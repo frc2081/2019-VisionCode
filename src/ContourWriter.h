@@ -28,6 +28,7 @@ namespace Icarus
 		ContourWriter();
 
 	private:
+		
 		class VisionTargetData {
 		public:
 			int TargetHeight;
@@ -56,6 +57,8 @@ namespace Icarus
 		ContourWriter::VisionData GetVisionData(ImageData* source); 
 
 		void WriteVisionData(VisionData Data);
+
+		void GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right);
 		
 	};
 
