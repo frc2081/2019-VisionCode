@@ -84,3 +84,5 @@ install:
 
 uninstall:
 	rm -v $(INSTALL_DIR)/$(EXECUTABLE_NAME)
+
+cleaninstall: uninstall clean all install
