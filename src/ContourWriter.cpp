@@ -35,7 +35,7 @@ namespace Icarus
   int ContourWriter::GetHeartbeat()
   {
     const int maxHeart = 32000;
-    return _heartbeat = _heartbeat++ % maxHeart;
+    return _heartbeat = ++_heartbeat % maxHeart;
   }
 
 	ContourWriter::ContourWriter()
