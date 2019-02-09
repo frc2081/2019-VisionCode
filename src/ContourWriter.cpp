@@ -6,15 +6,20 @@
 using namespace std;
 using namespace cv;
 using namespace std::chrono;
+using namespace nt;
 
 namespace Icarus
 {
 	void ContourWriter::Init()
 	{
+    _networkTableInstance.StartClientTeam(2081);
+    _networkTable = _networkTableInstance.GetTable("datatable");
 	}
 
 	void ContourWriter::Clean()
 	{
+    _networkTableInstance.StopClient();
+    _networkTable = NULL;
 	}
 
 	void ContourWriter::Sink(ImageData * source)
@@ -22,8 +27,21 @@ namespace Icarus
 		WriteVisionData(GetVisionData(source));
 	}
 
+  shared_ptr<NetworkTable> ContourWriter::GetNetworkTable()
+  {
+    return _networkTable;
+  }
+
+  int ContourWriter::GetHeartbeat()
+  {
+    const int maxHeart = 32000;
+    return _heartbeat = ++_heartbeat % maxHeart;
+  }
+
 	ContourWriter::ContourWriter()
 	{
+    _heartbeat = 0;
+    _networkTableInstance = nt::NetworkTableInstance::GetDefault();
 	}
 
 	VisionState ContourWriter::GetState(ImageData * source)
@@ -65,8 +83,10 @@ namespace Icarus
 		ContourWriter::VisionData Data;
 		Data.IsValid = true;
 		int center = source->GetImageData()->cols / 2;
-		Data.LeftTarget = GetTargetData(contours->at(0), center);
-		Data.RightTarget = GetTargetData(contours->at(1), center);
+		vector<Point> Left, Right;
+		GetTargetVectors(source, &Left, &Right);
+		Data.LeftTarget = GetTargetData(Left, center);
+		Data.RightTarget = GetTargetData(Right, center);
 		return Data;
 	}
 
@@ -75,20 +95,19 @@ namespace Icarus
 		const int waitInMilliseconds = 500;
 		this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
 
-		if (Data.IsValid) {
-			printf("[height: %d, width: %d, dist: %d] [height: %d, width: %d, dist: %d]\n", 
-			Data.LeftTarget.TargetHeight,
-			Data.LeftTarget.TargetWidth,
-			Data.LeftTarget.TargetDistFromCenter,
+			shared_ptr<NetworkTable> table = GetNetworkTable();
 
-			Data.RightTarget.TargetHeight,
-			Data.RightTarget.TargetWidth,
-			Data.RightTarget.TargetDistFromCenter);
-		}
-		else
-		{
-			printf("is not valid\n");
-		}	
+      // Target Data
+			table->PutNumber("LeftTargetHeight", Data.LeftTarget.TargetHeight);
+			table->PutNumber("RightTagetHeight", Data.RightTarget.TargetHeight);
+			table->PutNumber("LeftTargetWidth", Data.LeftTarget.TargetWidth);
+			table->PutNumber("RightTargetWidth", Data.RightTarget.TargetWidth);
+			table->PutNumber("LeftTargetDistFromCenter", Data.LeftTarget.TargetDistFromCenter);
+			table->PutNumber("RightTargetDistFromCenter", Data.RightTarget.TargetDistFromCenter);
+
+      // Metadata
+			table->PutBoolean("TargetDataValid", Data.IsValid);
+      table->PutNumber("VisionHeartbeat", GetHeartbeat());
 	}
 
 	ContourWriter::VisionData ContourWriter::VisionData::BadData()
@@ -97,7 +116,6 @@ namespace Icarus
 		Bad.LeftTarget = ContourWriter::VisionTargetData::BadData();
 		Bad.RightTarget = ContourWriter::VisionTargetData::BadData();
 		Bad.IsValid = false;
-
 		return Bad;
 	}
 
@@ -109,5 +127,21 @@ namespace Icarus
 		Bad.TargetWidth = -1;
 
 		return Bad;
+
+
 	}
+
+	void ContourWriter::GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right){
+			vector<vector<Point>>* contours = source->GetContours();
+			vector<Point> a = contours->at(0);
+			vector<Point>b = contours->at(1);
+			if(a.at(0).x < b.at(0).x){
+				*Left = a;
+				*Right = b;
+			}else{
+				*Left = b;
+				*Right = a;
+			}
+			
+			}
 }

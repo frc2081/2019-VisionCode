@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "CameraSource.h"
-#include "GripPipeline.h"
 
 using namespace std;
 using namespace grip;
