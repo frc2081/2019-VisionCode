@@ -59,6 +59,8 @@ namespace Icarus
 		void WriteVisionData(VisionData Data);
 
 		void GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right);
+
+    void FlushData();
 		
 	};
 

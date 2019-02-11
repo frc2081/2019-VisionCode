@@ -79,35 +79,40 @@ namespace Icarus
 		if (GetState(source) != TwoContoursDetected) {
 			return ContourWriter::VisionData::BadData();
 		}
-		vector<vector<Point>>* contours = source->GetContours();
+
 		ContourWriter::VisionData Data;
 		Data.IsValid = true;
-		int center = source->GetImageData()->cols / 2;
+
 		vector<Point> Left, Right;
+		int center = source->GetImageData()->cols / 2;
+
 		GetTargetVectors(source, &Left, &Right);
 		Data.LeftTarget = GetTargetData(Left, center);
 		Data.RightTarget = GetTargetData(Right, center);
+
 		return Data;
 	}
 
 	void ContourWriter::WriteVisionData(VisionData Data)
 	{
-		const int waitInMilliseconds = 500;
-		this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
+    const int waitInMilliseconds = 20;
+    this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
 
-			shared_ptr<NetworkTable> table = GetNetworkTable();
+    shared_ptr<NetworkTable> table = GetNetworkTable();
 
-      // Target Data
-			table->PutNumber("LeftTargetHeight", Data.LeftTarget.TargetHeight);
-			table->PutNumber("RightTagetHeight", Data.RightTarget.TargetHeight);
-			table->PutNumber("LeftTargetWidth", Data.LeftTarget.TargetWidth);
-			table->PutNumber("RightTargetWidth", Data.RightTarget.TargetWidth);
-			table->PutNumber("LeftTargetDistFromCenter", Data.LeftTarget.TargetDistFromCenter);
-			table->PutNumber("RightTargetDistFromCenter", Data.RightTarget.TargetDistFromCenter);
+    // Target Data
+    table->PutNumber("LeftTargetHeight", Data.LeftTarget.TargetHeight);
+    table->PutNumber("RightTagetHeight", Data.RightTarget.TargetHeight);
+    table->PutNumber("LeftTargetWidth", Data.LeftTarget.TargetWidth);
+    table->PutNumber("RightTargetWidth", Data.RightTarget.TargetWidth);
+    table->PutNumber("LeftTargetDistFromCenter", Data.LeftTarget.TargetDistFromCenter);
+    table->PutNumber("RightTargetDistFromCenter", Data.RightTarget.TargetDistFromCenter);
 
-      // Metadata
-			table->PutBoolean("TargetDataValid", Data.IsValid);
-      table->PutNumber("VisionHeartbeat", GetHeartbeat());
+    // Metadata
+    table->PutBoolean("TargetDataValid", Data.IsValid);
+    table->PutNumber("VisionHeartbeat", GetHeartbeat());
+
+    FlushData();
 	}
 
 	ContourWriter::VisionData ContourWriter::VisionData::BadData()
@@ -143,5 +148,11 @@ namespace Icarus
 				*Right = a;
 			}
 			
-			}
+  }
+
+
+  void ContourWriter::FlushData()
+  {
+    _networkTableInstance.Flush();
+  }
 }
