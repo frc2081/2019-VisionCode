@@ -102,7 +102,7 @@ namespace Icarus
 
     // Target Data
     table->PutNumber("LeftTargetHeight", Data.LeftTarget.TargetHeight);
-    table->PutNumber("RightTagetHeight", Data.RightTarget.TargetHeight);
+    table->PutNumber("RightTargetHeight", Data.RightTarget.TargetHeight);
     table->PutNumber("LeftTargetWidth", Data.LeftTarget.TargetWidth);
     table->PutNumber("RightTargetWidth", Data.RightTarget.TargetWidth);
     table->PutNumber("LeftTargetDistFromCenter", Data.LeftTarget.TargetDistFromCenter);
