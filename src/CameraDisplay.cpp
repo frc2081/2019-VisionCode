@@ -34,8 +34,8 @@ namespace Icarus
 		SetInfo(info, source);
 
 		Scalar contourColor(2, 8, 164);
-		rectangle(*contents, topLeft, bottomRight, boxColor);
-		putText(*contents, info, textOrigin, FONT_HERSHEY_SIMPLEX, 0.5, textColor);
+		rectangle(*contents, topLeft, bottomRight, boxColor, FILLED, LINE_8);
+		putText(*contents, info, textOrigin, FONT_HERSHEY_SIMPLEX, 0.5, textColor, FILLED, 8);
 		drawContours(*contents, *source->GetContours(), -1, contourColor);
 	}
 

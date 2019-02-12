@@ -48,6 +48,7 @@ namespace Icarus
 	{
 		vector<vector<Point>>* contours = source->GetContours();
 		int ContourNum = contours->size();
+
 		switch (ContourNum)
 		{
 		case  0:
@@ -68,9 +69,11 @@ namespace Icarus
 	{
 		Rect bound = boundingRect(contour);
 		ContourWriter::VisionTargetData Data;
+
 		Data.TargetHeight = bound.height;
 		Data.TargetWidth = bound.width;
 		Data.TargetDistFromCenter = (bound.x + (bound.width / 2)) - ImageCenter;
+
 		return Data;
 	}
 
@@ -132,14 +135,14 @@ namespace Icarus
 		Bad.TargetWidth = -1;
 
 		return Bad;
-
-
 	}
 
 	void ContourWriter::GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right){
 			vector<vector<Point>>* contours = source->GetContours();
+
 			vector<Point> a = contours->at(0);
 			vector<Point>b = contours->at(1);
+
 			if(a.at(0).x < b.at(0).x){
 				*Left = a;
 				*Right = b;
