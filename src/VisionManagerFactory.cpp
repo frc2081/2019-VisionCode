@@ -5,7 +5,6 @@
 #include "CameraSource.h"
 #include "CameraDisplay.h"
 #include "RawCameraSource.h"
-#include "ContourWriter.h"
 
 namespace Icarus
 {
@@ -28,14 +27,7 @@ namespace Icarus
 
 	VisionSink * VisionManagerFactory::BuildSink()
 	{
-		char sinkType;
-		VisionConfiguration* config = Config();
-
-		sinkType = config->GetSourceType();
-
-		return sinkType == 'w'
-			? (VisionSink*) new ContourWriter()
-			: new CameraDisplay("camera");
+		return new CameraDisplay("camera");
 	}
 
 	VisionManagerFactory::VisionManagerFactory(int argc, char ** argv)

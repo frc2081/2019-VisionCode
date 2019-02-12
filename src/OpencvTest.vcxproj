@@ -23,7 +23,7 @@
     <ProjectGuid>{D836DC6B-352D-4885-BF9D-4ACA0D271B35}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>OpencvTest</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -148,7 +148,6 @@
     <ClInclude Include="CameraSource.h" />
     <ClInclude Include="ConfigurationReader.h" />
     <ClInclude Include="GripPipeline.h" />
-    <ClInclude Include="ContourWriter.h" />
     <ClInclude Include="ImageData.h" />
     <ClInclude Include="IoEntity.h" />
     <ClInclude Include="RawCameraSource.h" />
@@ -164,7 +163,6 @@
     <ClCompile Include="CameraDisplay.cpp" />
     <ClCompile Include="CameraSource.cpp" />
     <ClCompile Include="ConfigurationReader.cpp" />
-    <ClCompile Include="ContourWriter.cpp" />
     <ClCompile Include="GripPipeline.cpp" />
     <ClCompile Include="ImageData.cpp" />
     <ClCompile Include="IoEntity.cpp" />
