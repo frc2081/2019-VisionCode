@@ -17,7 +17,8 @@ SOURCES := CameraDisplay.cpp CameraSource.cpp ConfigurationReader.cpp \
 					ContourWriter.cpp GripPipeline.cpp ImageData.cpp \
 					IoEntity.cpp OpencvTest.cpp RawCameraSource.cpp \
 					stdafx.cpp VisionConfiguration.cpp VisionManager.cpp \
-					VisionManagerFactory.cpp VisionSink.cpp VisionSource.cpp
+					VisionManagerFactory.cpp VisionSink.cpp VisionSource.cpp \
+					VisionFilter.cpp TargetFilter.cpp
 
 OBJECTS := $(SOURCES:.cpp=.o)
 
@@ -77,6 +78,12 @@ $(OBJECT_DIR)/VisionSink.o: $(SOURCE_DIR)/VisionSink.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJECT_DIR)/VisionSource.o: $(SOURCE_DIR)/VisionSource.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJECT_DIR)/VisionFilter.o: $(SOURCE_DIR)/VisionFilter.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJECT_DIR)/TargetFilter.o: $(SOURCE_DIR)/TargetFilter.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 mkdirs:

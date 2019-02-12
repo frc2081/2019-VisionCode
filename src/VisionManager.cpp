@@ -7,11 +7,12 @@ using namespace cv;
 
 namespace Icarus
 {
-	VisionManager::VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink)
+	VisionManager::VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink, VisionFilter* filter)
 	{
 		_config = config;
 		_source = source;
 		_sink = sink;
+    _filter = filter;
 	}
 
 	VisionManager::~VisionManager()
@@ -37,6 +38,7 @@ namespace Icarus
 		while (1)
 		{
 			_source->GetImageData(&data);
+      _filter->Filter(&data);
 			_sink->Consume(&data);
 
 			if (_config->GetSourceType() != 'w' && waitKey(1) == 27)
