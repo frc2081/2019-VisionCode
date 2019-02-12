@@ -6,15 +6,20 @@
 using namespace std;
 using namespace cv;
 using namespace std::chrono;
+using namespace nt;
 
 namespace Icarus
 {
 	void ContourWriter::Init()
 	{
+    _networkTableInstance.StartClientTeam(2081);
+    _networkTable = _networkTableInstance.GetTable("datatable");
 	}
 
 	void ContourWriter::Clean()
 	{
+    _networkTableInstance.StopClient();
+    _networkTable = NULL;
 	}
 
 	void ContourWriter::Sink(ImageData * source)
@@ -22,14 +27,28 @@ namespace Icarus
 		WriteVisionData(GetVisionData(source));
 	}
 
+  shared_ptr<NetworkTable> ContourWriter::GetNetworkTable()
+  {
+    return _networkTable;
+  }
+
+  int ContourWriter::GetHeartbeat()
+  {
+    const int maxHeart = 32000;
+    return _heartbeat = ++_heartbeat % maxHeart;
+  }
+
 	ContourWriter::ContourWriter()
 	{
+    _heartbeat = 0;
+    _networkTableInstance = nt::NetworkTableInstance::GetDefault();
 	}
 
 	VisionState ContourWriter::GetState(ImageData * source)
 	{
 		vector<vector<Point>>* contours = source->GetContours();
 		int ContourNum = contours->size();
+
 		switch (ContourNum)
 		{
 		case  0:
@@ -50,9 +69,11 @@ namespace Icarus
 	{
 		Rect bound = boundingRect(contour);
 		ContourWriter::VisionTargetData Data;
+
 		Data.TargetHeight = bound.height;
 		Data.TargetWidth = bound.width;
 		Data.TargetDistFromCenter = (bound.x + (bound.width / 2)) - ImageCenter;
+
 		return Data;
 	}
 
@@ -61,34 +82,40 @@ namespace Icarus
 		if (GetState(source) != TwoContoursDetected) {
 			return ContourWriter::VisionData::BadData();
 		}
-		vector<vector<Point>>* contours = source->GetContours();
+
 		ContourWriter::VisionData Data;
 		Data.IsValid = true;
+
+		vector<Point> Left, Right;
 		int center = source->GetImageData()->cols / 2;
-		Data.LeftTarget = GetTargetData(contours->at(0), center);
-		Data.RightTarget = GetTargetData(contours->at(1), center);
+
+		GetTargetVectors(source, &Left, &Right);
+		Data.LeftTarget = GetTargetData(Left, center);
+		Data.RightTarget = GetTargetData(Right, center);
+
 		return Data;
 	}
 
 	void ContourWriter::WriteVisionData(VisionData Data)
 	{
-		const int waitInMilliseconds = 500;
-		this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
+    const int waitInMilliseconds = 20;
+    this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
 
-		if (Data.IsValid) {
-			printf("[height: %d, width: %d, dist: %d] [height: %d, width: %d, dist: %d]\n", 
-			Data.LeftTarget.TargetHeight,
-			Data.LeftTarget.TargetWidth,
-			Data.LeftTarget.TargetDistFromCenter,
+    shared_ptr<NetworkTable> table = GetNetworkTable();
 
-			Data.RightTarget.TargetHeight,
-			Data.RightTarget.TargetWidth,
-			Data.RightTarget.TargetDistFromCenter);
-		}
-		else
-		{
-			printf("is not valid\n");
-		}	
+    // Target Data
+    table->PutNumber("LeftTargetHeight", Data.LeftTarget.TargetHeight);
+    table->PutNumber("RightTargetHeight", Data.RightTarget.TargetHeight);
+    table->PutNumber("LeftTargetWidth", Data.LeftTarget.TargetWidth);
+    table->PutNumber("RightTargetWidth", Data.RightTarget.TargetWidth);
+    table->PutNumber("LeftTargetDistFromCenter", Data.LeftTarget.TargetDistFromCenter);
+    table->PutNumber("RightTargetDistFromCenter", Data.RightTarget.TargetDistFromCenter);
+
+    // Metadata
+    table->PutBoolean("TargetDataValid", Data.IsValid);
+    table->PutNumber("VisionHeartbeat", GetHeartbeat());
+
+    FlushData();
 	}
 
 	ContourWriter::VisionData ContourWriter::VisionData::BadData()
@@ -97,7 +124,6 @@ namespace Icarus
 		Bad.LeftTarget = ContourWriter::VisionTargetData::BadData();
 		Bad.RightTarget = ContourWriter::VisionTargetData::BadData();
 		Bad.IsValid = false;
-
 		return Bad;
 	}
 
@@ -110,4 +136,26 @@ namespace Icarus
 
 		return Bad;
 	}
+
+	void ContourWriter::GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right){
+			vector<vector<Point>>* contours = source->GetContours();
+
+			vector<Point> a = contours->at(0);
+			vector<Point>b = contours->at(1);
+
+			if(a.at(0).x < b.at(0).x){
+				*Left = a;
+				*Right = b;
+			}else{
+				*Left = b;
+				*Right = a;
+			}
+			
+  }
+
+
+  void ContourWriter::FlushData()
+  {
+    _networkTableInstance.Flush();
+  }
 }

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+VISION_TARGET_BIN_NAME='vision-target'
+VISION_TARGET="/usr/local/bin/${VISION_TARGET_BIN_NAME}"
+CAMERA_INDEX=0
+TARGET_SINK=w
+HSV_THRESHOLDS='50 100 190 255 100 255'
+
+function start_program()
+{
+    ${VISION_TARGET} ${CAMERA_INDEX} ${TARGET_SINK} ${HSV_THRESHOLDS} 2>/dev/null 1>/dev/all &
+}
+
+function stop_program()
+{
+  killall -9 "${VISION_TARGET_BIN_NAME}"
+}
+
+case ${1} in
+  start)
+    start_program
+    ;;
+  stop)
+    stop_program
+    ;;
+  restart)
+    "${0}" stop
+    "${0}" start
+    ;;
+esac

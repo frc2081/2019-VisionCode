@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CameraDisplay.h"
-#include <opencv2\opencv.hpp>
-#include <opencv2\imgcodecs.hpp>
+#include <opencv2/opencv.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <string.h>
 
 static void SetInfo(char* info, Icarus::ImageData* data);
@@ -35,8 +35,8 @@ namespace Icarus
 
 		Scalar contourColor(2, 8, 164);
 		rectangle(*contents, topLeft, bottomRight, boxColor, FILLED, LINE_8);
-		putText(*contents, info, textOrigin, FONT_HERSHEY_SIMPLEX, 0.5, textColor);
-		drawContours(*contents, *source->GetContours(), -1, contourColor, FILLED, 8);
+		putText(*contents, info, textOrigin, FONT_HERSHEY_SIMPLEX, 0.5, textColor, FILLED, 8);
+		drawContours(*contents, *source->GetContours(), -1, contourColor);
 	}
 
 	void CameraDisplay::Init()

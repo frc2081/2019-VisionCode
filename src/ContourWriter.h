@@ -1,7 +1,8 @@
 #pragma once
 
 #include "VisionSink.h"
-
+#include <networktables/NetworkTableInstance.h>
+#include <networktables/NetworkTable.h>
 
 namespace Icarus
 {
@@ -20,11 +21,14 @@ namespace Icarus
 		void Init();
 		void Clean();
 		void Sink(ImageData* source);
+    std::shared_ptr<nt::NetworkTable> GetNetworkTable();
+    int GetHeartbeat();
 
 	public:
 		ContourWriter();
 
 	private:
+		
 		class VisionTargetData {
 		public:
 			int TargetHeight;
@@ -42,6 +46,10 @@ namespace Icarus
 			static ContourWriter::VisionData BadData();
 		};
 
+    nt::NetworkTableInstance _networkTableInstance;
+    std::shared_ptr<nt::NetworkTable> _networkTable;
+    int _heartbeat;
+
 		VisionState GetState(ImageData* source);
 		
 		ContourWriter::VisionTargetData GetTargetData(std::vector<cv::Point> contour, int ImageCenter);
@@ -49,6 +57,10 @@ namespace Icarus
 		ContourWriter::VisionData GetVisionData(ImageData* source); 
 
 		void WriteVisionData(VisionData Data);
+
+		void GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right);
+
+    void FlushData();
 		
 	};
 
