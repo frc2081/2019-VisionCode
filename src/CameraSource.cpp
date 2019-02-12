@@ -11,6 +11,7 @@ namespace Icarus
 	{
 		_pipeline = new GripPipeline(_config);
 		_cam = new VideoCapture(_config->GetCameraIndex());
+		_cam->set(CAP_PROP_EXPOSURE, _config->GetExposure());
 	}
 
 	void CameraSource::Clean()
