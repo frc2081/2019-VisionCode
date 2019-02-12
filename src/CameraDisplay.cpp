@@ -66,7 +66,7 @@ namespace Icarus
 
 static void SetInfo(char* info, Icarus::ImageData* data)
 {
-	vector<vector<Point>>* contours;
+	vector<Icarus::Contour>* contours;
 
 	int contourCount;
 	contours = data->GetContours();

@@ -46,7 +46,7 @@ namespace Icarus
 
 	VisionState ContourWriter::GetState(ImageData * source)
 	{
-		vector<vector<Point>>* contours = source->GetContours();
+		vector<Contour>* contours = source->GetContours();
 		int ContourNum = contours->size();
 
 		switch (ContourNum)
@@ -65,7 +65,7 @@ namespace Icarus
 		}
 	}
 
-	ContourWriter::VisionTargetData ContourWriter::GetTargetData(std::vector<cv::Point> contour, int ImageCenter)
+	ContourWriter::VisionTargetData ContourWriter::GetTargetData(Contour contour, int ImageCenter)
 	{
 		Rect bound = boundingRect(contour);
 		ContourWriter::VisionTargetData Data;
@@ -86,7 +86,7 @@ namespace Icarus
 		ContourWriter::VisionData Data;
 		Data.IsValid = true;
 
-		vector<Point> Left, Right;
+		Contour Left, Right;
 		int center = source->GetImageData()->cols / 2;
 
 		GetTargetVectors(source, &Left, &Right);
@@ -137,11 +137,11 @@ namespace Icarus
 		return Bad;
 	}
 
-	void ContourWriter::GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right){
-			vector<vector<Point>>* contours = source->GetContours();
+	void ContourWriter::GetTargetVectors(ImageData* source, Contour* Left, Contour* Right){
+			vector<Contour>* contours = source->GetContours();
 
-			vector<Point> a = contours->at(0);
-			vector<Point>b = contours->at(1);
+			Contour a = contours->at(0);
+			Contour b = contours->at(1);
 
 			if(a.at(0).x < b.at(0).x){
 				*Left = a;
