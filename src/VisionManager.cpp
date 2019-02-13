@@ -40,9 +40,6 @@ namespace Icarus
 			_source->GetImageData(&data);
       _filter->Filter(&data);
 			_sink->Consume(&data);
-
-			if (_config->GetSourceType() != 'w' && waitKey(1) == 27)
-				break;
 		}
 
 		return 0;

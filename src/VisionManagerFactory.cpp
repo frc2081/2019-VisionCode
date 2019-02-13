@@ -7,6 +7,7 @@
 #include "RawCameraSource.h"
 #include "ContourWriter.h"
 #include "TargetFilter.h"
+#include "TextDisplay.h"
 
 namespace Icarus
 {
@@ -34,9 +35,17 @@ namespace Icarus
 
 		sinkType = config->GetSourceType();
 
-		return sinkType == 'w'
-		 ? (VisionSink*) new ContourWriter()
-		 : new CameraDisplay("camera");
+    switch (sinkType)
+    {
+      case 'w':
+        return new ContourWriter();
+
+      case 't':
+        return new TextDisplay();
+      
+      default:
+        return new CameraDisplay("camera");
+    }
 	}
 
   VisionFilter* VisionManagerFactory::BuildFilter()

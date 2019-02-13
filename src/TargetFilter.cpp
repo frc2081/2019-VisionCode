@@ -16,6 +16,8 @@ namespace Icarus
 
   bool TargetFilter::IsMatch(Contour contour)
   {
-    return false;
+    Rect rect = boundingRect(contour);
+
+    return rect.x % 2 == 0 && rect.y % 2 == 0;
   }
 }

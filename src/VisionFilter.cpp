@@ -18,8 +18,11 @@ namespace Icarus
     vector<Contour>* contours;
     contours = data->GetContours();
 
-    for(vector<Contour>::iterator i = contours->begin(); i != contours->end(); ++i)
-      if(!IsMatch(*i))
-        contours->erase(i);
+    auto i = contours->begin();
+    while (i != contours->end())
+      if (!IsMatch(*i))
+        i = contours->erase(i);
+      else
+        ++i;
   }
 }
