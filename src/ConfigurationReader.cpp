@@ -17,7 +17,7 @@ namespace Icarus
 			satLow, satHigh,
 			lumLow, lumHigh;
 
-		int exposure;
+		double exposure;
 		if (argc < 10)
 			return 1;
 		
@@ -33,7 +33,7 @@ namespace Icarus
 		lumLow = atoi(argv[7]);
 		lumHigh = atoi(argv[8]);
 
-		exposure = atoi(argv[9]);
+		exposure = atof(argv[9]);
 
 		// TODO: Actually implement this.
 		*config = new VisionConfiguration(cameraIndex, sourceType,
