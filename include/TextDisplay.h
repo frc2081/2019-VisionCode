@@ -16,5 +16,6 @@ namespace Icarus
 
 	public:
 		TextDisplay();
+    bool OpensWindow();
 	};
 }

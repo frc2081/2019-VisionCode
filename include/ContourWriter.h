@@ -26,6 +26,7 @@ namespace Icarus
 
 	public:
 		ContourWriter();
+    bool OpensWindow();
 
 	private:
 		

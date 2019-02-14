@@ -62,6 +62,11 @@ namespace Icarus
 		contents = source->GetImageData();
 		imshow(_windowName, *contents);
 	}
+
+  bool CameraDisplay::OpensWindow()
+  {
+    return true;
+  }
 }
 
 static void SetInfo(char* info, Icarus::ImageData* data)

@@ -43,6 +43,11 @@ namespace Icarus
     _heartbeat = 0;
     _networkTableInstance = nt::NetworkTableInstance::GetDefault();
 	}
+  
+  bool ContourWriter::OpensWindow()
+  {
+    return false;
+  }
 
 	VisionState ContourWriter::GetState(ImageData * source)
 	{

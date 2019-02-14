@@ -18,5 +18,6 @@ namespace Icarus
 
 	public:
 		CameraDisplay(const char* windowName);
+    bool OpensWindow();
 	};
 }

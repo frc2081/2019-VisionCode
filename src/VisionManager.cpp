@@ -40,6 +40,8 @@ namespace Icarus
 			_source->GetImageData(&data);
       _filter->Filter(&data);
 			_sink->Consume(&data);
+      if (_sink->OpensWindow() && waitKey(1) == 27)
+        break;
 		}
 
 		return 0;

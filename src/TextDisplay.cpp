@@ -45,4 +45,9 @@ namespace Icarus
     rect = boundingRect(contour);
     printf("[h: %d, w: %d, x: %d, y: %d] ", rect.height, rect.width, rect.x, rect.y);
   }
+
+  bool TextDisplay::OpensWindow()
+  {
+    return false;
+  }
 }
