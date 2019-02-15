@@ -9,11 +9,11 @@ namespace Icarus
 		int _hueLow, _hueHigh,
 			_satLow, _satHigh,
 			_lumLow, _lumHigh;
-		int _exposure;
+		double _exposure;
 
 	public:
 		VisionConfiguration(int cameraIndex, char sourceType, int hueLow, int hueHigh,
-		int satLow, int satHigh, int lumLow, int lumHigh, int exposure);
+		int satLow, int satHigh, int lumLow, int lumHigh, double exposure);
 
 		int GetCameraIndex();
 		char GetSourceType();
@@ -27,6 +27,6 @@ namespace Icarus
 		int GetLumLow();
 		int GetLumHigh();
 		
-		int GetExposure();
+		double GetExposure();
 	};
 }

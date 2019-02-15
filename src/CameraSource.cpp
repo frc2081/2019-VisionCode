@@ -38,17 +38,17 @@ namespace Icarus
 		data->SetContours(GetContours());
 	}
 
-	cv::Mat * CameraSource::GetRawImage()
+	Mat * CameraSource::GetRawImage()
 	{
 		return &_rawImage;
 	}
 
-	cv::Mat * CameraSource::GetMask()
+	Mat * CameraSource::GetMask()
 	{
 		return _mask;
 	}
 
-	std::vector<std::vector<cv::Point>>* CameraSource::GetContours()
+	vector<Contour>* CameraSource::GetContours()
 	{
 		return _contours;
 	}
