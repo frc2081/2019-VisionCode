@@ -41,12 +41,12 @@ namespace Icarus
 
 	void CameraDisplay::Init()
 	{
-		namedWindow(_windowName);
+		
 	}
 
 	void CameraDisplay::Clean()
 	{
-		destroyWindow(_windowName);
+		
 	}
 
 	CameraDisplay::CameraDisplay(const char * windowName)
@@ -60,7 +60,8 @@ namespace Icarus
 		
 		Decorate(source);
 		contents = source->GetImageData();
-		imshow(_windowName, *contents);
+		imwrite("out.jpg", *contents);
+		throw "kill";
 	}
 
   bool CameraDisplay::OpensWindow()
