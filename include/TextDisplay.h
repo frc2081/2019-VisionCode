@@ -4,20 +4,18 @@
 
 namespace Icarus
 {
-	class CameraDisplay : public VisionSink
+	class TextDisplay : public VisionSink
 	{
 	private:
-		void Decorate(ImageData* source);
 
 	protected:
-		const char* _windowName;
-
 		void Init();
 		void Clean();
 		void Sink(ImageData* source);
+    virtual void PrintContour(Contour contour);
 
 	public:
-		CameraDisplay(const char* windowName);
+		TextDisplay();
     bool OpensWindow();
 	};
 }

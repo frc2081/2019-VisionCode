@@ -11,7 +11,7 @@ namespace Icarus
 	private:
 		VisionConfiguration* _config;
 
-		std::vector<std::vector<cv::Point>>* _contours;
+		std::vector<Contour>* _contours;
 		grip::GripPipeline* _pipeline;
 		cv::VideoCapture* _cam;
 		cv::Mat _rawImage, *_mask;
@@ -25,11 +25,9 @@ namespace Icarus
 
 		cv::Mat* GetRawImage();
 		cv::Mat* GetMask();
-		std::vector<std::vector<cv::Point>>* GetContours();
+		std::vector<Contour>* GetContours();
 
 	public:
 		CameraSource(VisionConfiguration* config);
 	};
-	
-
 }

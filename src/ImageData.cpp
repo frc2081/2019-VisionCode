@@ -1,28 +1,31 @@
 #include "stdafx.h"
 #include "ImageData.h"
 
+using namespace cv;
+using namespace std;
+
 namespace Icarus
 {
 	ImageData::ImageData()
 	{
 	}
 
-	cv::Mat* ImageData::GetImageData()
+	Mat* ImageData::GetImageData()
 	{
 		return _imageData;
 	}
 
-	std::vector<std::vector<cv::Point>>* ImageData::GetContours()
+	vector<Contour>* ImageData::GetContours()
 	{
 		return _contours;
 	}
 
-	void ImageData::SetImageData(cv::Mat* source)
+	void ImageData::SetImageData(Mat* source)
 	{
 		_imageData = source;
 	}
 
-	void ImageData::SetContours(std::vector<std::vector<cv::Point>>* contours)
+	void ImageData::SetContours(vector<Contour>* contours)
 	{
 		_contours = contours;
 	}

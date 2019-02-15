@@ -12,5 +12,6 @@ namespace Icarus
 
 	public:
 		void Consume(ImageData* source);
+    virtual bool OpensWindow() = 0;
 	};
 }

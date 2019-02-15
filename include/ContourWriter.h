@@ -26,6 +26,7 @@ namespace Icarus
 
 	public:
 		ContourWriter();
+    bool OpensWindow();
 
 	private:
 		
@@ -52,18 +53,15 @@ namespace Icarus
 
 		VisionState GetState(ImageData* source);
 		
-		ContourWriter::VisionTargetData GetTargetData(std::vector<cv::Point> contour, int ImageCenter);
+		ContourWriter::VisionTargetData GetTargetData(Contour contour, int ImageCenter);
 
 		ContourWriter::VisionData GetVisionData(ImageData* source); 
 
 		void WriteVisionData(VisionData Data);
 
-		void GetTargetVectors(ImageData* source, std::vector<cv::Point>* Left, std::vector<cv::Point>* Right);
+		void GetTargetVectors(ImageData* source, Contour* Left, Contour* Right);
 
     void FlushData();
 		
 	};
-
-	
-	
 }

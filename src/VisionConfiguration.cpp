@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "VisionConfiguration.h"
 
-Icarus::VisionConfiguration::VisionConfiguration(int cameraIndex, char sourceType, int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh, int exposure)
+Icarus::VisionConfiguration::VisionConfiguration(int cameraIndex, char sourceType, int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh, double exposure)
 {
 	_cameraIndex = cameraIndex;
 	_sourceType = sourceType;
@@ -58,7 +58,7 @@ int Icarus::VisionConfiguration::GetLumHigh()
 	return _lumHigh;
 }
 
-int Icarus::VisionConfiguration::GetExposure()
+double Icarus::VisionConfiguration::GetExposure()
 {
 	return _exposure;
 }

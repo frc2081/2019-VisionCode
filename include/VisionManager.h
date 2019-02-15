@@ -6,6 +6,7 @@
 #include "VisionSink.h"
 #include "VisionSource.h"
 #include "IoEntity.h"
+#include "VisionFilter.h"
 
 namespace Icarus
 {
@@ -16,13 +17,14 @@ namespace Icarus
 		ImageData _imageData;
 		VisionSource* _source;
 		VisionSink* _sink;
+    VisionFilter* _filter;
 
 	protected:
 		void Init();
 		void Clean();
 
 	public:
-		VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink);
+		VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink, VisionFilter* filter);
 		virtual ~VisionManager();
 		int Run();
 	};
