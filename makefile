@@ -99,7 +99,7 @@ install:
 	cp -v $(EXECUTABLE) $(INSTALL_DIR)
 	cp -v "$(INIT_SRC_DIR)/$(INIT_SCRIPT)" "$(INIT_INSTALL_DIR)"
 	# Forcefull removes windows-based line endings, in the event that git puts them there.
-	sed -i 's/\r//g' "$(INIT_SRC_DIR)/$(INIT_SCRIPT)" 
+	sed -i 's/\r//g' "$(INIT_INSTALL_DIR)/$(INIT_SCRIPT)" 
 	ln -s "$(INIT_INSTALL_DIR)/$(INIT_SCRIPT)" "$(INIT_RC_DIR)/$(INIT_RC_SCRIPT)"
 	
 
