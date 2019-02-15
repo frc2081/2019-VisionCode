@@ -5,7 +5,6 @@
 #include "CameraSource.h"
 #include "CameraDisplay.h"
 #include "RawCameraSource.h"
-#include "ContourWriter.h"
 #include "TargetFilter.h"
 #include "TextDisplay.h"
 
@@ -37,9 +36,6 @@ namespace Icarus
 
     switch (sinkType)
     {
-      case 'w':
-        return new ContourWriter();
-
       case 't':
         return new TextDisplay();
       

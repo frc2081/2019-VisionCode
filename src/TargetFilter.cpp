@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 #include "TargetFilter.h"
 
 using namespace std;

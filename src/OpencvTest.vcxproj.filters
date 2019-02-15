@@ -73,52 +73,67 @@
     <Filter Include="Source Files\Factories">
       <UniqueIdentifier>{57399f01-52bf-4216-a33f-f56c63b1d1fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IO\Filters">
+      <UniqueIdentifier>{9f8d13cd-2119-4049-8330-000624e23913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO\Filters">
+      <UniqueIdentifier>{0345bfdf-77a3-4d2f-addd-342569223042}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImageData.h">
-      <Filter>Header Files\DTO</Filter>
-    </ClInclude>
-    <ClInclude Include="VisionConfiguration.h">
-      <Filter>Header Files\DTO</Filter>
-    </ClInclude>
-    <ClInclude Include="IoEntity.h">
-      <Filter>Header Files\IO\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="VisionSink.h">
-      <Filter>Header Files\IO\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraDisplay.h">
+    <ClInclude Include="../include/CameraDisplay.h">
       <Filter>Header Files\IO\Sinks</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files\VisualC++</Filter>
+    <ClInclude Include="../include/CameraSource.h">
+      <Filter>Header Files\IO\Sources</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files\VisualC++</Filter>
-    </ClInclude>
-    <ClInclude Include="VisionSource.h">
+    <ClInclude Include="../include/VisionSink.h">
       <Filter>Header Files\IO\Base</Filter>
     </ClInclude>
-    <ClInclude Include="CameraSource.h">
-      <Filter>Header Files\IO\Sources</Filter>
+    <ClInclude Include="../include/VisionSource.h">
+      <Filter>Header Files\IO\Base</Filter>
     </ClInclude>
-    <ClInclude Include="VisionManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="ConfigurationReader.h">
+    <ClInclude Include="../include/ConfigurationReader.h">
       <Filter>Header Files\Configuration</Filter>
     </ClInclude>
-    <ClInclude Include="GripPipeline.h">
-      <Filter>Header Files\Grip</Filter>
+    <ClInclude Include="../include/ImageData.h">
+      <Filter>Header Files\DTO</Filter>
     </ClInclude>
-    <ClInclude Include="VisionManagerFactory.h">
+    <ClInclude Include="../include/VisionManagerFactory.h">
       <Filter>Header Files\Factories</Filter>
     </ClInclude>
-    <ClInclude Include="RawCameraSource.h">
+    <ClInclude Include="../include/VisionManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="../include/stdafx.h">
+      <Filter>Header Files\VisualC++</Filter>
+    </ClInclude>
+    <ClInclude Include="../include/targetver.h">
+      <Filter>Header Files\VisualC++</Filter>
+    </ClInclude>
+    <ClInclude Include="../include/IoEntity.h">
+      <Filter>Header Files\IO\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="../include/GripPipeline.h">
+      <Filter>Header Files\Grip</Filter>
+    </ClInclude>
+    <ClInclude Include="../include/RawCameraSource.h">
       <Filter>Header Files\IO\Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="../include/VisionConfiguration.h">
+      <Filter>Header Files\Configuration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TextDisplay.h">
+      <Filter>Header Files\IO\Sinks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\VisionFilter.h">
+      <Filter>Header Files\IO\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TargetFilter.h">
+      <Filter>Header Files\IO\Filters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +178,15 @@
     </ClCompile>
     <ClCompile Include="RawCameraSource.cpp">
       <Filter>Source Files\IO\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="TextDisplay.cpp">
+      <Filter>Source Files\IO\Sinks</Filter>
+    </ClCompile>
+    <ClCompile Include="VisionFilter.cpp">
+      <Filter>Source Files\IO\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetFilter.cpp">
+      <Filter>Source Files\IO\Filters</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
