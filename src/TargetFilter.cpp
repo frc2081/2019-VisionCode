@@ -1,4 +1,3 @@
-
 #include "TargetFilter.h"
 
 using namespace std;

@@ -7,6 +7,7 @@
 #include "RawCameraSource.h"
 #include "ContourWriter.h"
 #include "TargetFilter.h"
+#include "TargetPairFilter.h"
 #include "TextDisplay.h"
 
 using namespace std;
@@ -54,7 +55,8 @@ namespace Icarus
   {
     return new vector<VisionFilter*>
     {
-       new TargetFilter()
+       (VisionFilter*) new TargetFilter(),
+       new TargetPairFilter()
     };
   }
 

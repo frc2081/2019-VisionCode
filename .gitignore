@@ -342,3 +342,6 @@ healthchecksdb
 
 # Vim Files
 *.swp
+
+# Media Files
+*.jpg

@@ -18,7 +18,8 @@ SOURCES := CameraDisplay.cpp CameraSource.cpp ConfigurationReader.cpp \
 					IoEntity.cpp OpencvTest.cpp RawCameraSource.cpp \
 					stdafx.cpp VisionConfiguration.cpp VisionManager.cpp \
 					VisionManagerFactory.cpp VisionSink.cpp VisionSource.cpp \
-					VisionFilter.cpp TargetFilter.cpp TextDisplay.cpp
+					VisionFilter.cpp TargetFilter.cpp TextDisplay.cpp \
+					TargetPairFilter.cpp SingleVisionFilter.cpp
 
 OBJECTS := $(SOURCES:.cpp=.o)
 
@@ -84,6 +85,12 @@ $(OBJECT_DIR)/VisionFilter.o: $(SOURCE_DIR)/VisionFilter.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJECT_DIR)/TargetFilter.o: $(SOURCE_DIR)/TargetFilter.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJECT_DIR)/TargetPairFilter.o: $(SOURCE_DIR)/TargetPairFilter.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJECT_DIR)/SingleVisionFilter.o: $(SOURCE_DIR)/SingleVisionFilter.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJECT_DIR)/TextDisplay.o: $(SOURCE_DIR)/TextDisplay.cpp

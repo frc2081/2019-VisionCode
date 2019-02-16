@@ -7,12 +7,10 @@ namespace Icarus
 {
   class VisionFilter
   {
-    protected:
-      virtual bool IsMatch(Contour contour) = 0;
 
     public:
       VisionFilter();
       virtual ~VisionFilter();
-      void Filter(ImageData* data);
+      virtual void Filter(ImageData* data) = 0;
   };
 }
