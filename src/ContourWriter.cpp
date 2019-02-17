@@ -159,7 +159,7 @@ namespace Icarus
   }
 
 
-  void ContourWriter::FlushData()
+   void ContourWriter::FlushData()
   {
     _networkTableInstance.Flush();
   }
