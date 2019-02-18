@@ -6,13 +6,16 @@
 #include "CameraDisplay.h"
 #include "RawCameraSource.h"
 #include "TargetFilter.h"
+#include "TargetPairFilter.h"
 #include "TextDisplay.h"
+
+using namespace std;
 
 namespace Icarus
 {
 	VisionManager * VisionManagerFactory::BuildManager()
 	{
-		return new VisionManager(Config(), Source(), Sink(), Filter());
+		return new VisionManager(Config(), Source(), Sink(), Filters());
 	}
 
 	VisionSource * VisionManagerFactory::BuildSource()
@@ -44,9 +47,13 @@ namespace Icarus
     }
 	}
 
-  VisionFilter* VisionManagerFactory::BuildFilter()
+  vector<VisionFilter*>* VisionManagerFactory::BuildFilters()
   {
-    return new TargetFilter();
+    return new vector<VisionFilter*>
+    {
+       (VisionFilter*) new TargetFilter(),
+       new TargetPairFilter()
+    };
   }
 
 	VisionManagerFactory::VisionManagerFactory(int argc, char ** argv)
@@ -61,7 +68,7 @@ namespace Icarus
 		_manager = NULL;
 		_source = NULL;
 		_sink = NULL;
-    _filter = NULL;
+    _filters = NULL;
 	}
 
 
@@ -72,7 +79,14 @@ namespace Icarus
 		FACT_CLEAN(_manager);
 		FACT_CLEAN(_source);
 		FACT_CLEAN(_sink);
-    FACT_CLEAN(_filter);
+
+    if (_filters != NULL)
+    {
+      for(auto i = _filters->begin(); i != _filters->end(); i++)
+        delete *i;
+
+      delete _filters;
+    }
 	}
 
 	VisionManager * VisionManagerFactory::Manager()
@@ -100,12 +114,12 @@ namespace Icarus
 		return _sink;
 	}
 
-  VisionFilter* VisionManagerFactory::Filter()
+  vector<VisionFilter*>* VisionManagerFactory::Filters()
   {
-    if (_filter == NULL)
-      _filter = BuildFilter();
+    if (_filters == NULL)
+      _filters = BuildFilters();
 
-    return _filter;
+    return _filters;
   }
 
 	VisionConfiguration * VisionManagerFactory::Config()

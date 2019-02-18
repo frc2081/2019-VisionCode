@@ -14,13 +14,13 @@ namespace Icarus
 		VisionManager* _manager;
 		VisionSource* _source;
 		VisionSink* _sink;
-    VisionFilter* _filter;
+    std::vector<VisionFilter*>* _filters;
 
 	protected:
 		virtual VisionManager* BuildManager();
 		virtual VisionSource* BuildSource();
 		virtual VisionSink* BuildSink();
-    virtual VisionFilter* BuildFilter();
+    virtual std::vector<VisionFilter*>* BuildFilters();
 
 	public:
 		VisionManagerFactory(int argc, char** argv);
@@ -29,7 +29,7 @@ namespace Icarus
 		VisionManager* Manager();
 		VisionSource* Source();
 		VisionSink* Sink();
-    VisionFilter* Filter();
+    std::vector<VisionFilter*>* Filters();
 		VisionConfiguration* Config();
 	};
 }
