@@ -7,12 +7,12 @@ using namespace cv;
 
 namespace Icarus
 {
-	VisionManager::VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink, VisionFilter* filter)
+	VisionManager::VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink, vector<VisionFilter*>* filters)
 	{
 		_config = config;
 		_source = source;
 		_sink = sink;
-    _filter = filter;
+    _filters = filters;
 	}
 
 	VisionManager::~VisionManager()
@@ -38,7 +38,10 @@ namespace Icarus
 		while (1)
 		{
 			_source->GetImageData(&data);
-      _filter->Filter(&data);
+
+      for(auto i=_filters->begin(); i != _filters->end(); i++)
+        (*i)->Filter(&data);
+
 			_sink->Consume(&data);
       if (_sink->OpensWindow() && waitKey(1) == 27)
         break;

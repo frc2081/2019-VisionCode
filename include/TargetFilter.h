@@ -1,8 +1,8 @@
-#include "VisionFilter.h"
+#include "SingleVisionFilter.h"
 
 namespace Icarus
 {
-  class TargetFilter : public VisionFilter
+  class TargetFilter : public SingleVisionFilter
   {
     protected:
       bool IsMatch(Contour contour);

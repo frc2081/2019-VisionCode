@@ -22,6 +22,10 @@ namespace Icarus
     Contour hull;
     convexHull(Mat(contour, true), hull);
     double solidity = 100 * area  / contourArea(hull);
+
+    
+
+
     int vertexcount = contour.size();
     int MinHeight = 7;
     int MaxHeight = 200;

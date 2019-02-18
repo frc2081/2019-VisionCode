@@ -15,16 +15,16 @@ namespace Icarus
 	private:
 		VisionConfiguration* _config;
 		ImageData _imageData;
-		VisionSource* _source;
+    VisionSource* _source;
 		VisionSink* _sink;
-    VisionFilter* _filter;
+    std::vector<VisionFilter*>* _filters;
 
 	protected:
 		void Init();
 		void Clean();
 
 	public:
-		VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink, VisionFilter* filter);
+		VisionManager(VisionConfiguration* config, VisionSource* source, VisionSink* sink, std::vector<VisionFilter*>* filters);
 		virtual ~VisionManager();
 		int Run();
 	};
