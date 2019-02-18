@@ -135,6 +135,12 @@
     <ClInclude Include="..\include\TargetFilter.h">
       <Filter>Header Files\IO\Filters</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\SingleVisionFilter.h">
+      <Filter>Header Files\IO\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\TargetPairFilter.h">
+      <Filter>Header Files\IO\Filters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpencvTest.cpp">
@@ -186,6 +192,12 @@
       <Filter>Source Files\IO\Base</Filter>
     </ClCompile>
     <ClCompile Include="TargetFilter.cpp">
+      <Filter>Source Files\IO\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleVisionFilter.cpp">
+      <Filter>Source Files\IO\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetPairFilter.cpp">
       <Filter>Source Files\IO\Filters</Filter>
     </ClCompile>
   </ItemGroup>

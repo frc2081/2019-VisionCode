@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "TargetPairFilter.h"
 
 using namespace std;

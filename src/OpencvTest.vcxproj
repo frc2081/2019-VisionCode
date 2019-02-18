@@ -158,7 +158,9 @@
     <ClInclude Include="../include/VisionManagerFactory.h" />
     <ClInclude Include="../include/VisionSink.h" />
     <ClInclude Include="../include/VisionSource.h" />
+    <ClInclude Include="..\include\SingleVisionFilter.h" />
     <ClInclude Include="..\include\TargetFilter.h" />
+    <ClInclude Include="..\include\TargetPairFilter.h" />
     <ClInclude Include="..\include\TextDisplay.h" />
     <ClInclude Include="..\include\VisionFilter.h" />
   </ItemGroup>
@@ -171,6 +173,7 @@
     <ClCompile Include="IoEntity.cpp" />
     <ClCompile Include="OpencvTest.cpp" />
     <ClCompile Include="RawCameraSource.cpp" />
+    <ClCompile Include="SingleVisionFilter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -178,6 +181,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TargetFilter.cpp" />
+    <ClCompile Include="TargetPairFilter.cpp" />
     <ClCompile Include="TextDisplay.cpp" />
     <ClCompile Include="VisionConfiguration.cpp" />
     <ClCompile Include="VisionFilter.cpp" />

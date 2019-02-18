@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SingleVisionFilter.h"
 
 using namespace std;
