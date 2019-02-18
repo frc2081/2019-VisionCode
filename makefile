@@ -100,7 +100,7 @@ mkdirs:
 	mkdir -p $(SOURCE_DIR) $(OBJECT_DIR) $(BIN_DIR)
 
 clean:
-	rm -r $(OBJECT_DIR) $(BIN_DIR)
+	rm -fr $(OBJECT_DIR) $(BIN_DIR)
 
 install:
 	cp -v $(EXECUTABLE) $(INSTALL_DIR)
@@ -111,8 +111,8 @@ install:
 	
 
 uninstall:
-	rm -v $(INSTALL_DIR)/$(EXECUTABLE_NAME)
-	rm -v "$(INIT_INSTALL_DIR)/$(INIT_SCRIPT)"
-	rm -v "$(INIT_RC_DIR)/$(INIT_RC_SCRIPT)"
+	rm -fv $(INSTALL_DIR)/$(EXECUTABLE_NAME)
+	rm -fv "$(INIT_INSTALL_DIR)/$(INIT_SCRIPT)"
+	rm -fv "$(INIT_RC_DIR)/$(INIT_RC_SCRIPT)"
 
 cleaninstall: uninstall clean all install
