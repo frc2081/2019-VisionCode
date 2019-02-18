@@ -27,10 +27,10 @@ namespace Icarus
   {
     // TODO: Implement this.
       int pointRx = 0;
-      int HighestXVal = 0;
+      int HighestXVal = INT_MIN;
       int pointLx = 0;
-      int LowestXVal = 0;
-    for(int i = 0; i == contour.size(); i++){
+      int LowestXVal = INT_MAX;
+    for(int i = 0; i < contour.size(); i++){
 
       if(contour.at(i).x > HighestXVal){
         pointRx = i;
@@ -44,7 +44,7 @@ namespace Icarus
     // Correct Algorithm:
     // If the rightmost point is above the leftmost point, it is right-leaning.
 
-    return contour.at(pointLx).y < contour.at(pointRx).y;
+    return contour.at(pointLx).y > contour.at(pointRx).y;
   }
 
   void TargetPairFilter::Filter(ImageData* data)
