@@ -26,7 +26,7 @@ namespace Icarus
 
   void TestSource::ReadTestImage()
   {
-    const char* testImageName = "SimulatedTargets.svg";
+    const char* testImageName = "SimulatedTargets.png";
     string testImage = _config->GetShareDir() + "/" + testImageName;
 
     _testImage = imread(testImage);
