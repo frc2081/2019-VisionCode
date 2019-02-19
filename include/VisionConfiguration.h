@@ -1,4 +1,7 @@
 #pragma once
+
+#include <string>
+
 namespace Icarus
 {
 	class VisionConfiguration
@@ -10,10 +13,11 @@ namespace Icarus
 			_satLow, _satHigh,
 			_lumLow, _lumHigh;
 		double _exposure;
+    std::string _shareDir;
 
 	public:
 		VisionConfiguration(int cameraIndex, char sourceType, int hueLow, int hueHigh,
-		int satLow, int satHigh, int lumLow, int lumHigh, double exposure);
+		int satLow, int satHigh, int lumLow, int lumHigh, double exposure, std::string share);
 
 		int GetCameraIndex();
 		char GetSourceType();
@@ -28,5 +32,6 @@ namespace Icarus
 		int GetLumHigh();
 		
 		double GetExposure();
+    std::string GetShareDir();
 	};
 }
