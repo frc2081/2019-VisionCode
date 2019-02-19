@@ -2,6 +2,9 @@
 #include "ConfigurationReader.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <libgen.h>
+
+using namespace std;
 
 namespace Icarus
 {
@@ -11,6 +14,7 @@ namespace Icarus
 
 	int ConfigurationReader::Read(int argc, char ** argv, VisionConfiguration ** config)
 	{
+    string shareDir;
 		char sourceType;
 		int cameraIndex;
 		int hueLow, hueHigh,
@@ -20,6 +24,8 @@ namespace Icarus
 		double exposure;
 		if (argc < 10)
 			return 1;
+
+    const char* dirPath = "/../share";
 		
 		cameraIndex = atoi(argv[1]);
 		sourceType = argv[2][0];
@@ -34,13 +40,14 @@ namespace Icarus
 		lumHigh = atoi(argv[8]);
 
 		exposure = atof(argv[9]);
+    shareDir = (string)dirname(argv[0]) + (string) dirPath;
 
 		// TODO: Actually implement this.
 		*config = new VisionConfiguration(cameraIndex, sourceType,
 			hueLow, hueHigh,
 			satLow, satHigh,
 			lumLow, lumHigh,
-			exposure);
+			exposure, shareDir);
 		return 0;
 	}
 
