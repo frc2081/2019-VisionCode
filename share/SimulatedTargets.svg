@@ -15,7 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.1 r15371"
-   sodipodi:docname="SimulatedTargets.svg">
+   sodipodi:docname="SimulatedTargets.svg"
+   inkscape:export-filename="C:\Users\jcooley\Documents\Git\2019-VisionCode\share\SimulatedTargets.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -29,7 +32,7 @@
      inkscape:cx="159.23342"
      inkscape:cy="146.54235"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="g4532"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -85,17 +88,9 @@
        id="g4532"
        transform="matrix(1.4600974,0,0,1.4600974,-31.510856,-85.448445)">
       <path
-         sodipodi:nodetypes="ccccc"
-         inkscape:connector-curvature="0"
-         id="path4526"
-         d="m 64.946494,107.89023 8.084904,-17.105252 6.280835,3.073599 -7.550366,17.105253 z"
-         style="fill:#217f5f;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         style="fill:#217f5f;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 118.93494,109.2934 -8.0849,-17.105257 -6.28084,3.073599 7.55037,17.105258 z"
          id="path4528"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="ccccc" />
+         style="fill:#099767;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 118.93494,109.2934 -8.0849,-17.105257 -6.28084,3.073599 7.55037,17.105258 z m -53.988446,-1.40317 8.084904,-17.105252 6.280835,3.073599 -7.550366,17.105253 z" />
     </g>
   </g>
 </svg>
