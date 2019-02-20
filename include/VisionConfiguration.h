@@ -16,7 +16,7 @@
 #define DEFAULT_HIGH_LUM 100
 #define DEFAULT_INPUT_FILE ""
 #define DEFAULT_OUTPUT_FILE ""
-#define DEFAULT_FILTER_TYPES "TPC"
+#define DEFAULT_FILTER_TYPES "TPCD"
 
 namespace Icarus
 {
@@ -43,7 +43,8 @@ namespace Icarus
     TargetType = 0x1,
     TargetPairType = 0x2,
     ContourDrawingType = 0x4,
-    AllFilterTypes = TargetType | TargetPairType | ContourDrawingType
+    DataOverlayType = 0x8,
+    AllFilterTypes = TargetType | TargetPairType | ContourDrawingType | DataOverlayType
   };
 
 	class VisionConfiguration

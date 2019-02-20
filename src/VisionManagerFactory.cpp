@@ -10,6 +10,7 @@
 #include "TargetFilter.h"
 #include "TargetPairFilter.h"
 #include "ContourDrawingFilter.h"
+#include "DataOverlayFilter.h"
 #include "TextDisplay.h"
 #include "TestSource.h"
 
@@ -74,6 +75,7 @@ namespace Icarus
     ADD_FILTER(TargetType, TargetFilter);
     ADD_FILTER(TargetPairType, TargetPairFilter);
     ADD_FILTER(ContourDrawingType, ContourDrawingFilter);
+    ADD_FILTER(DataOverlayType, DataOverlayFilter);
 
     return filters;
   }

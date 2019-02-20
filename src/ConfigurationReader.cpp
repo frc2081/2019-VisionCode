@@ -165,6 +165,9 @@ namespace Icarus
       case 'C':
         return ContourDrawingType;
 
+      case 'D':
+        return DataOverlayType;
+
       default:
         return NoFilterTypes;
     }
