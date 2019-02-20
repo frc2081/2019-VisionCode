@@ -33,10 +33,8 @@ namespace Icarus
 		Point textOrigin(topLeft.x + boxPadding, topLeft.y + 2* boxPadding);
 		SetInfo(info, source);
 
-		Scalar contourColor(2, 8, 164);
 		rectangle(*contents, topLeft, bottomRight, boxColor, FILLED, LINE_8);
 		putText(*contents, info, textOrigin, FONT_HERSHEY_SIMPLEX, 0.5, textColor);
-		drawContours(*contents, *source->GetContours(), -1, contourColor, FILLED, 8);
 	}
 
 	void CameraDisplay::Init()

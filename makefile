@@ -19,7 +19,8 @@ SOURCES := CameraDisplay.cpp CameraSource.cpp ConfigurationReader.cpp \
 					stdafx.cpp VisionConfiguration.cpp VisionManager.cpp \
 					VisionManagerFactory.cpp VisionSink.cpp VisionSource.cpp \
 					VisionFilter.cpp TargetFilter.cpp TextDisplay.cpp \
-					TargetPairFilter.cpp SingleVisionFilter.cpp TestSource.cpp
+					TargetPairFilter.cpp SingleVisionFilter.cpp TestSource.cpp \
+					ContourDrawingFilter.cpp
 
 OBJECTS := $(SOURCES:.cpp=.o)
 
@@ -97,6 +98,9 @@ $(OBJECT_DIR)/TextDisplay.o: $(SOURCE_DIR)/TextDisplay.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJECT_DIR)/TestSource.o: $(SOURCE_DIR)/TestSource.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJECT_DIR)/ContourDrawingFilter.o: $(SOURCE_DIR)/ContourDrawingFilter.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 mkdirs:

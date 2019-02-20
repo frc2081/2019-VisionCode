@@ -152,6 +152,9 @@ namespace Icarus
       case 'P':
         return TargetPairType;
 
+      case 'C':
+        return ContourDrawingType;
+
       default:
         return NoFilterTypes;
     }
@@ -189,8 +192,9 @@ namespace Icarus
   "                         'T' Command Line\n"
   "                         'W' Network Tables\n\n"
   "   -f FILTER_TYPES     Filters to apply (Default: '%s')\n"
-  "                         'T' Target Filter       - Limits contours to target shapes.\n"
-  "                         'P' Target Pair Filter  - Limits contours to a target pair.\n\n"
+  "                         'T' Target Filter           - Limits contours to target shapes.\n"
+  "                         'P' Target Pair Filter      - Limits contours to a target pair.\n"
+  "                         'C' Contour Drawing Filter  - Draws contours on final image.\n\n"
   "   -v HSV_VALUES       HSV Values, comma separated.\n"
   "                         Ex: %d,%d,%d,%d,%d,%d\n\n"
   "   -e EXPOSURE         Exposure setting for camera (Default: %0.2f)\n\n"

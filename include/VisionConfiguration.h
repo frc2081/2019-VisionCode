@@ -15,7 +15,7 @@
 #define DEFAULT_LOW_LUM 20
 #define DEFAULT_HIGH_LUM 100
 #define DEFAULT_TEST_IMAGE ""
-#define DEFAULT_FILTER_TYPES "TP"
+#define DEFAULT_FILTER_TYPES "TPC"
 
 namespace Icarus
 {
@@ -40,7 +40,8 @@ namespace Icarus
     NoFilterTypes = 0x0,
     TargetType = 0x1,
     TargetPairType = 0x2,
-    AllFilterTypes = TargetType | TargetPairType
+    ContourDrawingType = 0x4,
+    AllFilterTypes = TargetType | TargetPairType | ContourDrawingType
   };
 
 	class VisionConfiguration

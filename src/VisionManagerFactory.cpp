@@ -8,6 +8,7 @@
 #include "ContourWriter.h"
 #include "TargetFilter.h"
 #include "TargetPairFilter.h"
+#include "ContourDrawingFilter.h"
 #include "TextDisplay.h"
 #include "TestSource.h"
 
@@ -68,6 +69,7 @@ namespace Icarus
     // Warning: The order in which filters are added is very important.
     ADD_FILTER(TargetType, TargetFilter);
     ADD_FILTER(TargetPairType, TargetPairFilter);
+    ADD_FILTER(ContourDrawingType, ContourDrawingFilter);
 
     return filters;
   }
