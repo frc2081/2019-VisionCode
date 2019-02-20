@@ -4,6 +4,7 @@
 
 #include "CameraSource.h"
 #include "CameraDisplay.h"
+#include "ImageDisplay.h"
 #include "RawCameraSource.h"
 #include "ContourWriter.h"
 #include "TargetFilter.h"
@@ -53,6 +54,9 @@ namespace Icarus
 
       case CommandLineType:
         return new TextDisplay();
+
+      case ImageDisplayType:
+        return new ImageDisplay(config);
       
       default:
         return new ContourWriter();

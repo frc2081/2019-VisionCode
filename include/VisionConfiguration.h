@@ -32,7 +32,8 @@ namespace Icarus
     UnknownSinkType = 0x0,
     CameraDisplayType = 0x1,
     CommandLineType = 0x2,
-    NetworkTablesType = 0x3
+    NetworkTablesType = 0x3,
+    ImageDisplayType = 0x4
   };
 
   enum FilterTypes

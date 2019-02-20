@@ -74,7 +74,6 @@ namespace Icarus
 
         case 'i':
           testImage = optarg;
-          sourceType = TestSourceType;
           break;
 
         case 'h':
@@ -126,6 +125,9 @@ namespace Icarus
 
       case 'W':
         return NetworkTablesType;
+
+      case 'I':
+        return ImageDisplayType;
 
       default:
         return UnknownSinkType;
@@ -190,7 +192,8 @@ namespace Icarus
   "   -k SINK_TYPE        Which sink to use (Default: Network Tables):\n"
   "                         'C' Camera Display\n"
   "                         'T' Command Line\n"
-  "                         'W' Network Tables\n\n"
+  "                         'W' Network Tables\n"
+  "                         'I' Image Display\n\n"
   "   -f FILTER_TYPES     Filters to apply (Default: '%s')\n"
   "                         'T' Target Filter           - Limits contours to target shapes.\n"
   "                         'P' Target Pair Filter      - Limits contours to a target pair.\n"
@@ -198,8 +201,8 @@ namespace Icarus
   "   -v HSV_VALUES       HSV Values, comma separated.\n"
   "                         Ex: %d,%d,%d,%d,%d,%d\n\n"
   "   -e EXPOSURE         Exposure setting for camera (Default: %0.2f)\n\n"
-  "   -i TEST_IMAGE       Uses TEST_IMAGE as the source for a test source.\n\n"
-  "   -h                  Prints this help information.\n",
+  "   -i TEST_IMAGE       Uses TEST_IMAGE as the source or output for a test source/sink.\n\n"
+  "   -h                  Prints this help information.\n\n",
     bin,
     DEFAULT_CAMERA_INDEX,
     DEFAULT_FILTER_TYPES,
