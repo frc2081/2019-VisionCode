@@ -9,6 +9,7 @@
 #include "TargetFilter.h"
 #include "TargetPairFilter.h"
 #include "TextDisplay.h"
+#include "TestSource.h"
 
 using namespace std;
 
@@ -21,33 +22,39 @@ namespace Icarus
 
 	VisionSource * VisionManagerFactory::BuildSource()
 	{
-		char sourceType;
+    SourceTypes sourceType;
 		VisionConfiguration* config = Config();
 
 		sourceType = config->GetSourceType();
+    switch(sourceType)
+    {
+      case RawCameraSourceType:
+        return new RawCameraSource(config);
 
-		return sourceType == 'r'
-			? new RawCameraSource(config)
-			: new CameraSource(config);
+      case TestSourceType:
+        return new TestSource(config);
+
+      default:
+        return new CameraSource(config);
+    }
 	}
 
 	VisionSink * VisionManagerFactory::BuildSink()
 	{
-		char sinkType;
+		SinkTypes sinkType;
 		VisionConfiguration* config = Config();
 
-		sinkType = config->GetSourceType();
-
+		sinkType = config->GetSinkType();
     switch (sinkType)
     {
-      case 'w':
-        return new ContourWriter();
+      case CameraDisplayType:
+        return new CameraDisplay("camera");
 
-      case 't':
+      case CommandLineType:
         return new TextDisplay();
       
       default:
-        return new CameraDisplay("camera");
+        return new ContourWriter();
     }
 	}
 

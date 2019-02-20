@@ -2,25 +2,58 @@
 
 #include <string>
 
+#define DEFAULT_EXPOSURE (double) 0
+#define DEFAULT_CAMERA_INDEX 0
+
+#define DEFAULT_SINK_TYPE NetworkTablesType
+#define DEFAULT_SOURCE_TYPE CameraSourceType
+
+#define DEFAULT_LOW_HUE 60
+#define DEFAULT_HIGH_HUE 100
+#define DEFAULT_LOW_SAT 200
+#define DEFAULT_HIGH_SAT 255
+#define DEFAULT_LOW_LUM 20
+#define DEFAULT_HIGH_LUM 100
+#define DEFAULT_TEST_IMAGE ""
+
 namespace Icarus
 {
+  enum SourceTypes
+  {
+    UnknownSourceType = 0x0,
+    CameraSourceType = 0x1,
+    RawCameraSourceType = 0x2,
+    TestSourceType = 0x3
+  };
+
+  enum SinkTypes
+  {
+    UnknownSinkType = 0x0,
+    CameraDisplayType = 0x1,
+    CommandLineType = 0x2,
+    NetworkTablesType = 0x3
+  };
+
 	class VisionConfiguration
 	{
 	private:
 		int _cameraIndex;
-		char _sourceType;
+		SourceTypes _sourceType;
+    SinkTypes _sinkType;
 		int _hueLow, _hueHigh,
 			_satLow, _satHigh,
 			_lumLow, _lumHigh;
 		double _exposure;
-    std::string _shareDir;
+    std::string _testImage;
 
 	public:
-		VisionConfiguration(int cameraIndex, char sourceType, int hueLow, int hueHigh,
-		int satLow, int satHigh, int lumLow, int lumHigh, double exposure, std::string share);
+		VisionConfiguration(int cameraIndex, SourceTypes sourceType, SinkTypes sinkType,
+        int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh,
+        double exposure, std::string testImage);
 
 		int GetCameraIndex();
-		char GetSourceType();
+		SourceTypes GetSourceType();
+    SinkTypes GetSinkType();
 
 		int GetHueLow();
 		int GetHueHigh();
@@ -32,6 +65,6 @@ namespace Icarus
 		int GetLumHigh();
 		
 		double GetExposure();
-    std::string GetShareDir();
+    std::string GetTestImage();
 	};
 }

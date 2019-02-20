@@ -26,10 +26,7 @@ namespace Icarus
 
   void TestSource::ReadTestImage()
   {
-    const char* testImageName = "SimulatedTargets.png";
-    string testImage = _config->GetShareDir() + "/" + testImageName;
-
-    _testImage = imread(testImage);
+    _testImage = imread(_config->GetTestImage());
     _pipeline->Process(_testImage);
     _contours = _pipeline->GetFilterContoursOutput();
   }
