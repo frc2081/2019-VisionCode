@@ -14,8 +14,9 @@
 #define DEFAULT_HIGH_SAT 255
 #define DEFAULT_LOW_LUM 20
 #define DEFAULT_HIGH_LUM 100
-#define DEFAULT_TEST_IMAGE ""
-#define DEFAULT_FILTER_TYPES "TP"
+#define DEFAULT_INPUT_FILE ""
+#define DEFAULT_OUTPUT_FILE ""
+#define DEFAULT_FILTER_TYPES "TPCD"
 
 namespace Icarus
 {
@@ -32,7 +33,8 @@ namespace Icarus
     UnknownSinkType = 0x0,
     CameraDisplayType = 0x1,
     CommandLineType = 0x2,
-    NetworkTablesType = 0x3
+    NetworkTablesType = 0x3,
+    ImageDisplayType = 0x4
   };
 
   enum FilterTypes
@@ -40,7 +42,9 @@ namespace Icarus
     NoFilterTypes = 0x0,
     TargetType = 0x1,
     TargetPairType = 0x2,
-    AllFilterTypes = TargetType | TargetPairType
+    ContourDrawingType = 0x4,
+    DataOverlayType = 0x8,
+    AllFilterTypes = TargetType | TargetPairType | ContourDrawingType | DataOverlayType
   };
 
 	class VisionConfiguration
@@ -54,13 +58,13 @@ namespace Icarus
 			_satLow, _satHigh,
 			_lumLow, _lumHigh;
 		double _exposure;
-    std::string _testImage;
+    std::string _inputFile, _outputFile;
 
 	public:
 		VisionConfiguration(int cameraIndex,
         SourceTypes sourceType, SinkTypes sinkType, FilterTypes filterTypes,
         int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh,
-        double exposure, std::string testImage);
+        double exposure, std::string inputFile, std::string outputFile);
 
 		int GetCameraIndex();
 		SourceTypes GetSourceType();
@@ -77,6 +81,7 @@ namespace Icarus
 		int GetLumHigh();
 		
 		double GetExposure();
-    std::string GetTestImage();
+    std::string GetInputFile();
+    std::string GetOutputFile();
 	};
 }

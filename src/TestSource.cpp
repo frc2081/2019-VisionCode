@@ -26,7 +26,7 @@ namespace Icarus
 
   void TestSource::ReadTestImage()
   {
-    _testImage = imread(_config->GetTestImage());
+    _testImage = imread(_config->GetInputFile());
     _pipeline->Process(_testImage);
     _contours = _pipeline->GetFilterContoursOutput();
   }

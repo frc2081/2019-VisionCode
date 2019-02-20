@@ -4,10 +4,13 @@
 
 #include "CameraSource.h"
 #include "CameraDisplay.h"
+#include "ImageDisplay.h"
 #include "RawCameraSource.h"
 #include "ContourWriter.h"
 #include "TargetFilter.h"
 #include "TargetPairFilter.h"
+#include "ContourDrawingFilter.h"
+#include "DataOverlayFilter.h"
 #include "TextDisplay.h"
 #include "TestSource.h"
 
@@ -52,6 +55,9 @@ namespace Icarus
 
       case CommandLineType:
         return new TextDisplay();
+
+      case ImageDisplayType:
+        return new ImageDisplay(config);
       
       default:
         return new ContourWriter();
@@ -68,6 +74,8 @@ namespace Icarus
     // Warning: The order in which filters are added is very important.
     ADD_FILTER(TargetType, TargetFilter);
     ADD_FILTER(TargetPairType, TargetPairFilter);
+    ADD_FILTER(ContourDrawingType, ContourDrawingFilter);
+    ADD_FILTER(DataOverlayType, DataOverlayFilter);
 
     return filters;
   }
