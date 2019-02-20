@@ -23,12 +23,12 @@ namespace Icarus
   sourceType = DEFAULT_SOURCE_TYPE;                           \
   filterTypes = GetFilterTypes((char*) DEFAULT_FILTER_TYPES); \
   cameraIndex = DEFAULT_CAMERA_INDEX;                         \
-  testImage = DEFAULT_TEST_IMAGE;                             \
+  inputFile = DEFAULT_INPUT_FILE;                             \
+  outputFile = DEFAULT_OUTPUT_FILE;                           \
   exposure = DEFAULT_EXPOSURE;
 
 	int ConfigurationReader::Read(int argc, char ** argv, VisionConfiguration ** config)
 	{
-    string testImage;
 		SourceTypes sourceType;
     SinkTypes sinkType;
     FilterTypes filterTypes;
@@ -37,11 +37,12 @@ namespace Icarus
 			satLow, satHigh,
 			lumLow, lumHigh;
     double exposure;
+    string inputFile, outputFile;
 
     SET_DEFAULT_CONFIG_VALUES();
 
     int c;
-    const char* optstr = ":c:s:k:f:e:v:i:h";
+    const char* optstr = ":c:s:k:f:e:v:i:o:h";
     while ((c = getopt(argc, argv, optstr)) != -1)
       switch(c)
       {
@@ -73,7 +74,13 @@ namespace Icarus
           break;
 
         case 'i':
-          testImage = optarg;
+          inputFile = optarg;
+          sourceType = TestSourceType;
+          break;
+
+       case 'o':
+          outputFile = optarg;
+          sinkType = ImageDisplayType;
           break;
 
         case 'h':
@@ -85,7 +92,8 @@ namespace Icarus
 			hueLow, hueHigh,
 			satLow, satHigh,
 			lumLow, lumHigh,
-			exposure, testImage);
+			exposure,
+      inputFile, outputFile);
 
 		return ValidateConfiguration(*config);
 	}
@@ -183,7 +191,7 @@ namespace Icarus
 	{
     char* bin = basename(argv[0]);
     printf("Usage: '%s' [-c CAMERA_INDEX] [-s SOURCE_TYPE] [-k SINK_TYPE] [-f FILTER_TYPES]\n"
-           "            [-v HSV_VALUES] [-e EXPOSURE] [-i TEST_IMAGE] [-h]\n\n"
+           "            [-v HSV_VALUES] [-e EXPOSURE] [-i INPUT_FILE] [-o OUTPUT_FILE] [-h]\n\n"
   "   -c CAMERA_INDEX     Index of camera to use.  (Default: %d)\n\n"
   "   -s SOURCE_TYPE      Which source to use (Default: Camera Source):\n"
   "                         'C' Camera Source\n"
@@ -201,7 +209,8 @@ namespace Icarus
   "   -v HSV_VALUES       HSV Values, comma separated.\n"
   "                         Ex: %d,%d,%d,%d,%d,%d\n\n"
   "   -e EXPOSURE         Exposure setting for camera (Default: %0.2f)\n\n"
-  "   -i TEST_IMAGE       Uses TEST_IMAGE as the source or output for a test source/sink.\n\n"
+  "   -i INPUT_FILE       Uses INPUT_FILE as the data for a test source.\n\n"
+  "   -o OUTPUT_FILE      Uses OUTPUT_FILE as the source or output for a test source/sink.\n\n"
   "   -h                  Prints this help information.\n\n",
     bin,
     DEFAULT_CAMERA_INDEX,

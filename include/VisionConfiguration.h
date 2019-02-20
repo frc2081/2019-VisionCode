@@ -14,7 +14,8 @@
 #define DEFAULT_HIGH_SAT 255
 #define DEFAULT_LOW_LUM 20
 #define DEFAULT_HIGH_LUM 100
-#define DEFAULT_TEST_IMAGE ""
+#define DEFAULT_INPUT_FILE ""
+#define DEFAULT_OUTPUT_FILE ""
 #define DEFAULT_FILTER_TYPES "TPC"
 
 namespace Icarus
@@ -56,13 +57,13 @@ namespace Icarus
 			_satLow, _satHigh,
 			_lumLow, _lumHigh;
 		double _exposure;
-    std::string _testImage;
+    std::string _inputFile, _outputFile;
 
 	public:
 		VisionConfiguration(int cameraIndex,
         SourceTypes sourceType, SinkTypes sinkType, FilterTypes filterTypes,
         int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh,
-        double exposure, std::string testImage);
+        double exposure, std::string inputFile, std::string outputFile);
 
 		int GetCameraIndex();
 		SourceTypes GetSourceType();
@@ -79,6 +80,7 @@ namespace Icarus
 		int GetLumHigh();
 		
 		double GetExposure();
-    std::string GetTestImage();
+    std::string GetInputFile();
+    std::string GetOutputFile();
 	};
 }

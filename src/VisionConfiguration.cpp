@@ -8,7 +8,7 @@ namespace Icarus
   VisionConfiguration::VisionConfiguration(int cameraIndex,
       SourceTypes sourceType, SinkTypes sinkType, FilterTypes filterTypes,
       int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh,
-      double exposure, string testImage)
+      double exposure, string inputFile, string outputFile)
   {
     _cameraIndex = cameraIndex;
     _sourceType = sourceType;
@@ -25,7 +25,8 @@ namespace Icarus
     _lumHigh = lumHigh;
 
     _exposure = exposure;
-    _testImage = testImage;
+    _inputFile = inputFile;
+    _outputFile = outputFile;
   }
 
   int VisionConfiguration::GetCameraIndex()
@@ -83,8 +84,13 @@ namespace Icarus
     return _exposure;
   }
 
-  string VisionConfiguration::GetTestImage()
+  string VisionConfiguration::GetInputFile()
   {
-    return _testImage;
+    return _inputFile;
+  }
+
+  string VisionConfiguration::GetOutputFile()
+  {
+    return _outputFile;
   }
 }

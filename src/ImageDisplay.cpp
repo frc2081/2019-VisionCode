@@ -13,7 +13,7 @@ namespace Icarus
 {
 	void ImageDisplay::Init()
 	{
-	  _imageName = _config->GetTestImage();
+	  _imageName = _config->GetOutputFile();
 	}
 
 	void ImageDisplay::Clean()
