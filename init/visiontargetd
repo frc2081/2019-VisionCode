@@ -3,8 +3,10 @@
 VISION_TARGET_BIN_NAME='vision-target'
 VISION_TARGET="/usr/local/bin/${VISION_TARGET_BIN_NAME}"
 CAMERA_INDEX=0
-TARGET_SINK=w
-HSV_THRESHOLDS='60 100 200 255 20 100'
+TARGET_SINK=W
+TARGET_SOURCE=C
+TARGET_FILTERS=TP
+HSV_THRESHOLDS='60,100,200,255,20,100'
 EXPOSURE_SETTING=0
 
 function set_camera_configurations()
@@ -16,7 +18,8 @@ function set_camera_configurations()
 function start_program()
 {
     set_camera_configurations /dev/video0
-    ${VISION_TARGET} ${CAMERA_INDEX} ${TARGET_SINK} ${HSV_THRESHOLDS} ${EXPOSURE_SETTING} 2>/dev/null 1>/dev/all &
+    ${VISION_TARGET} -c ${CAMERA_INDEX} -s ${TARGET_SOURCE} -k ${TARGET_SINK} -f ${TARGET_FILTERS} \
+                     -v ${HSV_THRESHOLDS} -e ${TARGET_EXPOSURE} 2>/dev/null 1>/dev/null &
 }
 
 function stop_program()
