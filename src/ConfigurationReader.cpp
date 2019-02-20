@@ -22,11 +22,12 @@ namespace Icarus
   sinkType = DEFAULT_SINK_TYPE;       \
   sourceType = DEFAULT_SOURCE_TYPE;   \
   cameraIndex = DEFAULT_CAMERA_INDEX; \
+  testImage = DEFAULT_TEST_IMAGE;     \
   exposure = DEFAULT_EXPOSURE;
 
 	int ConfigurationReader::Read(int argc, char ** argv, VisionConfiguration ** config)
 	{
-    string shareDir;
+    string testImage;
 		SourceTypes sourceType;
     SinkTypes sinkType;
 		int cameraIndex;
@@ -38,7 +39,7 @@ namespace Icarus
     SET_DEFAULT_CONFIG_VALUES();
 
     int c;
-    const char* optstr = ":c:s:k:e:v:h";
+    const char* optstr = ":c:s:k:e:v:i:h";
     while ((c = getopt(argc, argv, optstr)) != -1)
       switch(c)
       {
@@ -65,6 +66,11 @@ namespace Icarus
           exposure = GetExposure(optarg);
           break;
 
+        case 'i':
+          testImage = optarg;
+          sourceType = TestSourceType;
+          break;
+
         case 'h':
           return HELP_CODE;
       }
@@ -74,7 +80,7 @@ namespace Icarus
 			hueLow, hueHigh,
 			satLow, satHigh,
 			lumLow, lumHigh,
-			exposure, shareDir);
+			exposure, testImage);
 
 		return ValidateConfiguration(*config);
 	}
@@ -139,20 +145,21 @@ namespace Icarus
 	void ConfigurationReader::DisplayUsage(char** argv)
 	{
     char* bin = basename(argv[0]);
-    printf("Usage: '%s' [-c CAMERA_INDEX] [-s SOURCE_TYPE] [-k SINK_TYPE] [-v HSV_VALUES] [-e EXPOSURE] [-h]\n\n"
-  " -c CAMERA_INDEX     Index of camera to use.  (Default: %d)\n\n"
-  " -s SOURCE_TYPE      Which source to use (Default: Camera Source):\n"
-  "                      'c' Camera Source\n"
-  "                      'r' Raw Camera Source\n"
-  "                      't' Test Source\n\n"
-  "-k SINK_TYPE        Which sink to use (Default: Network Tables):\n"
-  "                      'c' Camera Display\n"
-  "                      't' Command Line\n"
-  "                      'w' Network Tables\n\n"
-  "-v HSV_VALUES       HSV Values, comma separated.\n"
-  "                      Ex: %d,%d,%d,%d,%d,%d\n\n"
-  "-e EXPOSURE         Exposure setting for camera (Default: %0.2f)\n"
-  "-h                  Prints this help information.\n",
+    printf("Usage: '%s' [-c CAMERA_INDEX] [-s SOURCE_TYPE] [-k SINK_TYPE] [-v HSV_VALUES] [-e EXPOSURE] [-i TEST_IMAGE] [-h]\n\n"
+  "   -c CAMERA_INDEX     Index of camera to use.  (Default: %d)\n\n"
+  "   -s SOURCE_TYPE      Which source to use (Default: Camera Source):\n"
+  "                         'c' Camera Source\n"
+  "                         'r' Raw Camera Source\n"
+  "                         't' Test Source\n\n"
+  "   -k SINK_TYPE        Which sink to use (Default: Network Tables):\n"
+  "                         'c' Camera Display\n"
+  "                         't' Command Line\n"
+  "                         'w' Network Tables\n\n"
+  "   -v HSV_VALUES       HSV Values, comma separated.\n"
+  "                         Ex: %d,%d,%d,%d,%d,%d\n\n"
+  "   -e EXPOSURE         Exposure setting for camera (Default: %0.2f)\n\n"
+  "   -i TEST_IMAGE       Uses TEST_IMAGE as the source for a test source.\n\n"
+  "   -h                  Prints this help information.\n",
     bin,
     DEFAULT_CAMERA_INDEX,
     DEFAULT_LOW_HUE,

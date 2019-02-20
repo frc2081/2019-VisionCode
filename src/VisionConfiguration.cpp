@@ -7,7 +7,7 @@ namespace Icarus
 {
   VisionConfiguration::VisionConfiguration(int cameraIndex, SourceTypes sourceType, SinkTypes sinkType,
       int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh,
-      double exposure, string share)
+      double exposure, string testImage)
   {
     _cameraIndex = cameraIndex;
     _sourceType = sourceType;
@@ -23,7 +23,7 @@ namespace Icarus
     _lumHigh = lumHigh;
 
     _exposure = exposure;
-    _shareDir = share;
+    _testImage = testImage;
   }
 
   int VisionConfiguration::GetCameraIndex()
@@ -76,8 +76,8 @@ namespace Icarus
     return _exposure;
   }
 
-  string VisionConfiguration::GetShareDir()
+  string VisionConfiguration::GetTestImage()
   {
-    return _shareDir;
+    return _testImage;
   }
 }

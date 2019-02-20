@@ -4,7 +4,6 @@
 
 #define DEFAULT_EXPOSURE (double) 0
 #define DEFAULT_CAMERA_INDEX 0
-#define HELP_CODE 99999
 
 #define DEFAULT_SINK_TYPE NetworkTablesType
 #define DEFAULT_SOURCE_TYPE CameraSourceType
@@ -15,6 +14,7 @@
 #define DEFAULT_HIGH_SAT 255
 #define DEFAULT_LOW_LUM 20
 #define DEFAULT_HIGH_LUM 100
+#define DEFAULT_TEST_IMAGE ""
 
 namespace Icarus
 {
@@ -44,12 +44,12 @@ namespace Icarus
 			_satLow, _satHigh,
 			_lumLow, _lumHigh;
 		double _exposure;
-    std::string _shareDir;
+    std::string _testImage;
 
 	public:
 		VisionConfiguration(int cameraIndex, SourceTypes sourceType, SinkTypes sinkType,
         int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh,
-        double exposure, std::string share);
+        double exposure, std::string testImage);
 
 		int GetCameraIndex();
 		SourceTypes GetSourceType();
@@ -65,6 +65,6 @@ namespace Icarus
 		int GetLumHigh();
 		
 		double GetExposure();
-    std::string GetShareDir();
+    std::string GetTestImage();
 	};
 }
