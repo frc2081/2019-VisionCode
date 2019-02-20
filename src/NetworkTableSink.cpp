@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ContourWriter.h"
+#include "NetworkTableSink.h"
 #include <thread>
 #include <chrono>
 
@@ -10,46 +10,46 @@ using namespace nt;
 
 namespace Icarus
 {
-	void ContourWriter::Init()
+	void NetworkTableSink::Init()
 	{
     _networkTableInstance.StartClientTeam(2081);
     _networkTable = _networkTableInstance.GetTable("datatable");
 	}
 
-	void ContourWriter::Clean()
+	void NetworkTableSink::Clean()
 	{
     _networkTableInstance.StopClient();
     _networkTable = NULL;
 	}
 
-	void ContourWriter::Sink(ImageData * source)
+	void NetworkTableSink::Sink(ImageData * source)
 	{
 		WriteVisionData(GetVisionData(source));
 	}
 
-  shared_ptr<NetworkTable> ContourWriter::GetNetworkTable()
+  shared_ptr<NetworkTable> NetworkTableSink::GetNetworkTable()
   {
     return _networkTable;
   }
 
-  int ContourWriter::GetHeartbeat()
+  int NetworkTableSink::GetHeartbeat()
   {
     const int maxHeart = 32000;
     return _heartbeat = ++_heartbeat % maxHeart;
   }
 
-	ContourWriter::ContourWriter()
+	NetworkTableSink::NetworkTableSink()
 	{
     _heartbeat = 0;
     _networkTableInstance = nt::NetworkTableInstance::GetDefault();
 	}
   
-  bool ContourWriter::OpensWindow()
+  bool NetworkTableSink::OpensWindow()
   {
     return false;
   }
 
-	VisionState ContourWriter::GetState(ImageData * source)
+	VisionState NetworkTableSink::GetState(ImageData * source)
 	{
 		vector<Contour>* contours = source->GetContours();
 		int ContourNum = contours->size();
@@ -70,10 +70,10 @@ namespace Icarus
 		}
 	}
 
-	ContourWriter::VisionTargetData ContourWriter::GetTargetData(Contour contour, int ImageCenter)
+	NetworkTableSink::VisionTargetData NetworkTableSink::GetTargetData(Contour contour, int ImageCenter)
 	{
 		Rect bound = boundingRect(contour);
-		ContourWriter::VisionTargetData Data;
+		NetworkTableSink::VisionTargetData Data;
 
 		Data.TargetHeight = bound.height;
 		Data.TargetWidth = bound.width;
@@ -82,13 +82,13 @@ namespace Icarus
 		return Data;
 	}
 
-	ContourWriter::VisionData ContourWriter::GetVisionData(ImageData * source)
+	NetworkTableSink::VisionData NetworkTableSink::GetVisionData(ImageData * source)
 	{
 		if (GetState(source) != TwoContoursDetected) {
-			return ContourWriter::VisionData::BadData();
+			return NetworkTableSink::VisionData::BadData();
 		}
 
-		ContourWriter::VisionData Data;
+		NetworkTableSink::VisionData Data;
 		Data.IsValid = true;
 
 		Contour Left, Right;
@@ -101,7 +101,7 @@ namespace Icarus
 		return Data;
 	}
 
-	void ContourWriter::WriteVisionData(VisionData Data)
+	void NetworkTableSink::WriteVisionData(VisionData Data)
 	{
     const int waitInMilliseconds = 20;
     this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
@@ -123,18 +123,18 @@ namespace Icarus
     FlushData();
 	}
 
-	ContourWriter::VisionData ContourWriter::VisionData::BadData()
+	NetworkTableSink::VisionData NetworkTableSink::VisionData::BadData()
 	{
-		ContourWriter::VisionData Bad;
-		Bad.LeftTarget = ContourWriter::VisionTargetData::BadData();
-		Bad.RightTarget = ContourWriter::VisionTargetData::BadData();
+		NetworkTableSink::VisionData Bad;
+		Bad.LeftTarget = NetworkTableSink::VisionTargetData::BadData();
+		Bad.RightTarget = NetworkTableSink::VisionTargetData::BadData();
 		Bad.IsValid = false;
 		return Bad;
 	}
 
-	ContourWriter::VisionTargetData ContourWriter::VisionTargetData::BadData()
+	NetworkTableSink::VisionTargetData NetworkTableSink::VisionTargetData::BadData()
 	{
-		ContourWriter::VisionTargetData Bad;
+		NetworkTableSink::VisionTargetData Bad;
 		Bad.TargetDistFromCenter = -1;
 		Bad.TargetHeight = -1;
 		Bad.TargetWidth = -1;
@@ -142,7 +142,7 @@ namespace Icarus
 		return Bad;
 	}
 
-	void ContourWriter::GetTargetVectors(ImageData* source, Contour* Left, Contour* Right){
+	void NetworkTableSink::GetTargetVectors(ImageData* source, Contour* Left, Contour* Right){
 			vector<Contour>* contours = source->GetContours();
 
 			Contour a = contours->at(0);
@@ -158,8 +158,7 @@ namespace Icarus
 			
   }
 
-
-   void ContourWriter::FlushData()
+   void NetworkTableSink::FlushData()
   {
     _networkTableInstance.Flush();
   }

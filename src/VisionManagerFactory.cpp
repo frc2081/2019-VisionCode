@@ -6,7 +6,7 @@
 #include "CameraDisplay.h"
 #include "ImageDisplay.h"
 #include "RawCameraSource.h"
-#include "ContourWriter.h"
+#include "NetworkTableSink.h"
 #include "UdpSink.h"
 #include "TargetFilter.h"
 #include "TargetPairFilter.h"
@@ -64,7 +64,7 @@ namespace Icarus
         return new UdpSink(config);
       
       default:
-        return new ContourWriter();
+        return new NetworkTableSink();
     }
 	}
 

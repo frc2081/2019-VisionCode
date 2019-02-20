@@ -14,7 +14,7 @@ HEADER_DIR = include
 EXECUTABLE_NAME := vision-target
 
 SOURCES := CameraDisplay.cpp CameraSource.cpp ConfigurationReader.cpp \
-					ContourWriter.cpp GripPipeline.cpp ImageData.cpp \
+					NetworkTableSink.cpp GripPipeline.cpp ImageData.cpp \
 					IoEntity.cpp OpencvTest.cpp RawCameraSource.cpp \
 					stdafx.cpp VisionConfiguration.cpp VisionManager.cpp \
 					VisionManagerFactory.cpp VisionSink.cpp VisionSource.cpp \
@@ -47,7 +47,7 @@ $(OBJECT_DIR)/CameraSource.o: $(SOURCE_DIR)/CameraSource.cpp
 $(OBJECT_DIR)/ConfigurationReader.o: $(SOURCE_DIR)/ConfigurationReader.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJECT_DIR)/ContourWriter.o: $(SOURCE_DIR)/ContourWriter.cpp
+$(OBJECT_DIR)/NetworkTableSink.o: $(SOURCE_DIR)/NetworkTableSink.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJECT_DIR)/GripPipeline.o: $(SOURCE_DIR)/GripPipeline.cpp

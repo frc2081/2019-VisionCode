@@ -15,7 +15,7 @@ namespace Icarus
 		TooManyContoursDetected
 	};
 
-	class ContourWriter : public VisionSink {
+	class NetworkTableSink : public VisionSink {
 
 	protected:
 		void Init();
@@ -25,7 +25,7 @@ namespace Icarus
     int GetHeartbeat();
 
 	public:
-		ContourWriter();
+		NetworkTableSink();
     bool OpensWindow();
 
 	private:
@@ -35,16 +35,16 @@ namespace Icarus
 			int TargetHeight;
 			int TargetWidth;
 			int TargetDistFromCenter;
-			static ContourWriter::VisionTargetData BadData();
+			static NetworkTableSink::VisionTargetData BadData();
 
 		};
 
 		class VisionData {
 		public:
-			ContourWriter::VisionTargetData LeftTarget;
-			ContourWriter::VisionTargetData RightTarget;
+			NetworkTableSink::VisionTargetData LeftTarget;
+			NetworkTableSink::VisionTargetData RightTarget;
 			bool IsValid;
-			static ContourWriter::VisionData BadData();
+			static NetworkTableSink::VisionData BadData();
 		};
 
     nt::NetworkTableInstance _networkTableInstance;
@@ -53,9 +53,9 @@ namespace Icarus
 
 		VisionState GetState(ImageData* source);
 		
-		ContourWriter::VisionTargetData GetTargetData(Contour contour, int ImageCenter);
+		NetworkTableSink::VisionTargetData GetTargetData(Contour contour, int ImageCenter);
 
-		ContourWriter::VisionData GetVisionData(ImageData* source); 
+		NetworkTableSink::VisionData GetVisionData(ImageData* source); 
 
 		void WriteVisionData(VisionData Data);
 
