@@ -12,17 +12,18 @@ namespace Icarus
 	{
 	}
 
-#define SET_DEFAULT_CONFIG_VALUES()   \
-  hueLow = DEFAULT_LOW_HUE;           \
-  hueHigh = DEFAULT_HIGH_HUE;         \
-  satLow = DEFAULT_LOW_SAT;           \
-  satHigh = DEFAULT_HIGH_SAT;         \
-  lumLow = DEFAULT_LOW_LUM;           \
-  lumHigh = DEFAULT_HIGH_LUM;         \
-  sinkType = DEFAULT_SINK_TYPE;       \
-  sourceType = DEFAULT_SOURCE_TYPE;   \
-  cameraIndex = DEFAULT_CAMERA_INDEX; \
-  testImage = DEFAULT_TEST_IMAGE;     \
+#define SET_DEFAULT_CONFIG_VALUES()                           \
+  hueLow = DEFAULT_LOW_HUE;                                   \
+  hueHigh = DEFAULT_HIGH_HUE;                                 \
+  satLow = DEFAULT_LOW_SAT;                                   \
+  satHigh = DEFAULT_HIGH_SAT;                                 \
+  lumLow = DEFAULT_LOW_LUM;                                   \
+  lumHigh = DEFAULT_HIGH_LUM;                                 \
+  sinkType = DEFAULT_SINK_TYPE;                               \
+  sourceType = DEFAULT_SOURCE_TYPE;                           \
+  filterTypes = GetFilterTypes((char*) DEFAULT_FILTER_TYPES); \
+  cameraIndex = DEFAULT_CAMERA_INDEX;                         \
+  testImage = DEFAULT_TEST_IMAGE;                             \
   exposure = DEFAULT_EXPOSURE;
 
 	int ConfigurationReader::Read(int argc, char ** argv, VisionConfiguration ** config)
@@ -30,6 +31,7 @@ namespace Icarus
     string testImage;
 		SourceTypes sourceType;
     SinkTypes sinkType;
+    FilterTypes filterTypes;
 		int cameraIndex;
 		int hueLow, hueHigh,
 			satLow, satHigh,
@@ -39,7 +41,7 @@ namespace Icarus
     SET_DEFAULT_CONFIG_VALUES();
 
     int c;
-    const char* optstr = ":c:s:k:e:v:i:h";
+    const char* optstr = ":c:s:k:f:e:v:i:h";
     while ((c = getopt(argc, argv, optstr)) != -1)
       switch(c)
       {
@@ -53,6 +55,10 @@ namespace Icarus
 
         case 'k':
           sinkType = GetSinkType(optarg);
+          break;
+
+       case 'f':
+          filterTypes = GetFilterTypes(optarg);
           break;
 
         case 'v':
@@ -76,7 +82,7 @@ namespace Icarus
       }
 
 		*config = new VisionConfiguration(cameraIndex,
-      sourceType, sinkType,
+      sourceType, sinkType, filterTypes,
 			hueLow, hueHigh,
 			satLow, satHigh,
 			lumLow, lumHigh,
@@ -94,13 +100,13 @@ namespace Icarus
   {
     switch (*optarg)
     {
-      case 'c':
+      case 'C':
         return CameraSourceType;
 
-      case 'r':
+      case 'R':
         return RawCameraSourceType;
 
-      case 't':
+      case 'T':
         return TestSourceType;
 
       default:
@@ -112,19 +118,45 @@ namespace Icarus
   {
     switch (*optarg)
     {
-      case 'c':
+      case 'C':
         return CameraDisplayType;
 
-      case 't':
+      case 'T':
         return CommandLineType;
 
-      case 'w':
+      case 'W':
         return NetworkTablesType;
 
       default:
         return UnknownSinkType;
     }
   }
+
+  FilterTypes ConfigurationReader::GetFilterTypes(char* optarg)
+  {
+    FilterTypes types = NoFilterTypes;
+    for(int i=0; optarg[i] != 0; i++)
+      types = (FilterTypes) (types | GetFilterType(optarg[i]));
+
+    return types;
+  }
+
+
+  FilterTypes ConfigurationReader::GetFilterType(char filter)
+  {
+    switch(filter)
+    {
+      case 'T':
+        return TargetType;
+
+      case 'P':
+        return TargetPairType;
+
+      default:
+        return NoFilterTypes;
+    }
+  }
+
 
   void ConfigurationReader::GetHslValues(char* optarg,
       int* hueLow, int* hueHigh,
@@ -145,16 +177,20 @@ namespace Icarus
 	void ConfigurationReader::DisplayUsage(char** argv)
 	{
     char* bin = basename(argv[0]);
-    printf("Usage: '%s' [-c CAMERA_INDEX] [-s SOURCE_TYPE] [-k SINK_TYPE] [-v HSV_VALUES] [-e EXPOSURE] [-i TEST_IMAGE] [-h]\n\n"
+    printf("Usage: '%s' [-c CAMERA_INDEX] [-s SOURCE_TYPE] [-k SINK_TYPE] [-f FILTER_TYPES]\n"
+           "            [-v HSV_VALUES] [-e EXPOSURE] [-i TEST_IMAGE] [-h]\n\n"
   "   -c CAMERA_INDEX     Index of camera to use.  (Default: %d)\n\n"
   "   -s SOURCE_TYPE      Which source to use (Default: Camera Source):\n"
-  "                         'c' Camera Source\n"
-  "                         'r' Raw Camera Source\n"
-  "                         't' Test Source\n\n"
+  "                         'C' Camera Source\n"
+  "                         'R' Raw Camera Source\n"
+  "                         'T' Test Source\n\n"
   "   -k SINK_TYPE        Which sink to use (Default: Network Tables):\n"
-  "                         'c' Camera Display\n"
-  "                         't' Command Line\n"
-  "                         'w' Network Tables\n\n"
+  "                         'C' Camera Display\n"
+  "                         'T' Command Line\n"
+  "                         'W' Network Tables\n\n"
+  "   -f FILTER_TYPES     Filters to apply (Default: '%s')\n"
+  "                         'T' Target Filter       - Limits contours to target shapes.\n"
+  "                         'P' Target Pair Filter  - Limits contours to a target pair.\n\n"
   "   -v HSV_VALUES       HSV Values, comma separated.\n"
   "                         Ex: %d,%d,%d,%d,%d,%d\n\n"
   "   -e EXPOSURE         Exposure setting for camera (Default: %0.2f)\n\n"
@@ -162,6 +198,7 @@ namespace Icarus
   "   -h                  Prints this help information.\n",
     bin,
     DEFAULT_CAMERA_INDEX,
+    DEFAULT_FILTER_TYPES,
     DEFAULT_LOW_HUE,
     DEFAULT_HIGH_HUE,
     DEFAULT_LOW_SAT,

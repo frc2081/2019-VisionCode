@@ -5,13 +5,15 @@ using namespace std;
 
 namespace Icarus
 {
-  VisionConfiguration::VisionConfiguration(int cameraIndex, SourceTypes sourceType, SinkTypes sinkType,
+  VisionConfiguration::VisionConfiguration(int cameraIndex,
+      SourceTypes sourceType, SinkTypes sinkType, FilterTypes filterTypes,
       int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh,
       double exposure, string testImage)
   {
     _cameraIndex = cameraIndex;
     _sourceType = sourceType;
     _sinkType = sinkType;
+    _filterTypes = filterTypes;
 
     _hueLow = hueLow;
     _hueHigh = hueHigh;
@@ -39,6 +41,11 @@ namespace Icarus
   SinkTypes VisionConfiguration::GetSinkType()
   {
     return _sinkType;
+  }
+
+  FilterTypes VisionConfiguration::GetFilterTypes()
+  {
+    return _filterTypes;
   }
 
   int VisionConfiguration::GetHueLow()

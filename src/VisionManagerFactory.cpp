@@ -58,13 +58,18 @@ namespace Icarus
     }
 	}
 
+#define ADD_FILTER(ftype, filterClass) if ((filterTypes & ftype) != 0) filters->push_back(new filterClass);
   vector<VisionFilter*>* VisionManagerFactory::BuildFilters()
   {
-    return new vector<VisionFilter*>
-    {
-       (VisionFilter*) new TargetFilter(),
-       new TargetPairFilter()
-    };
+    vector<VisionFilter*>* filters = new vector<VisionFilter*>();
+    VisionConfiguration* config = Config();
+    FilterTypes filterTypes = config->GetFilterTypes();
+
+    // Warning: The order in which filters are added is very important.
+    ADD_FILTER(TargetType, TargetFilter);
+    ADD_FILTER(TargetPairType, TargetPairFilter);
+
+    return filters;
   }
 
 	VisionManagerFactory::VisionManagerFactory(int argc, char ** argv)

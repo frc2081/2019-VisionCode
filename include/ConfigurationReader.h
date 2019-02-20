@@ -12,6 +12,8 @@ namespace Icarus
     int GetCameraIndex(char* optarg);
     SourceTypes GetSourceType(char* optarg);
     SinkTypes GetSinkType(char* optarg);
+    FilterTypes GetFilterTypes(char* optarg);
+    FilterTypes GetFilterType(char filter);
     void GetHslValues(char* optarg,
         int* hueLow, int* hueHigh,
         int* satLow, int* satHigh,

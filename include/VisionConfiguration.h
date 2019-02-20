@@ -15,6 +15,7 @@
 #define DEFAULT_LOW_LUM 20
 #define DEFAULT_HIGH_LUM 100
 #define DEFAULT_TEST_IMAGE ""
+#define DEFAULT_FILTER_TYPES "TP"
 
 namespace Icarus
 {
@@ -34,12 +35,21 @@ namespace Icarus
     NetworkTablesType = 0x3
   };
 
+  enum FilterTypes
+  {
+    NoFilterTypes = 0x0,
+    TargetType = 0x1,
+    TargetPairType = 0x2,
+    AllFilterTypes = TargetType | TargetPairType
+  };
+
 	class VisionConfiguration
 	{
 	private:
 		int _cameraIndex;
 		SourceTypes _sourceType;
     SinkTypes _sinkType;
+    FilterTypes _filterTypes;
 		int _hueLow, _hueHigh,
 			_satLow, _satHigh,
 			_lumLow, _lumHigh;
@@ -47,13 +57,15 @@ namespace Icarus
     std::string _testImage;
 
 	public:
-		VisionConfiguration(int cameraIndex, SourceTypes sourceType, SinkTypes sinkType,
+		VisionConfiguration(int cameraIndex,
+        SourceTypes sourceType, SinkTypes sinkType, FilterTypes filterTypes,
         int hueLow, int hueHigh, int satLow, int satHigh, int lumLow, int lumHigh,
         double exposure, std::string testImage);
 
 		int GetCameraIndex();
 		SourceTypes GetSourceType();
     SinkTypes GetSinkType();
+    FilterTypes GetFilterTypes();
 
 		int GetHueLow();
 		int GetHueHigh();
