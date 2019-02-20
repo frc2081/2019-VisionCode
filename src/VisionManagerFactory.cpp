@@ -7,6 +7,7 @@
 #include "ImageDisplay.h"
 #include "RawCameraSource.h"
 #include "ContourWriter.h"
+#include "UdpSink.h"
 #include "TargetFilter.h"
 #include "TargetPairFilter.h"
 #include "ContourDrawingFilter.h"
@@ -58,6 +59,9 @@ namespace Icarus
 
       case ImageDisplayType:
         return new ImageDisplay(config);
+
+      case UdpSinkType:
+        return new UdpSink(config);
       
       default:
         return new ContourWriter();

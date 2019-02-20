@@ -4,8 +4,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <string.h>
 
-static void SetInfo(char* info, Icarus::ImageData* data);
-
 using namespace cv;
 using namespace std;
 

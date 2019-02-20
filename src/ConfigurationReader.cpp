@@ -137,6 +137,9 @@ namespace Icarus
       case 'I':
         return ImageDisplayType;
 
+      case 'U':
+        return UdpSinkType;
+
       default:
         return UnknownSinkType;
     }
@@ -204,6 +207,7 @@ namespace Icarus
   "                         'C' Camera Display\n"
   "                         'T' Command Line\n"
   "                         'W' Network Tables\n"
+  "                         'U' UDP Stream\n"
   "                         'I' Image Display\n\n"
   "   -f FILTER_TYPES     Filters to apply (Default: '%s')\n"
   "                         'T' Target Filter           - Limits contours to target shapes.\n"
