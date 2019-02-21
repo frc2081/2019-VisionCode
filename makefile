@@ -12,6 +12,7 @@ INSTALL_DIR = /usr/local/bin
 HEADER_DIR = include
 
 EXECUTABLE_NAME := vision-target
+CLIENT_EXECUTABLE_NAME := udp-client
 
 SOURCES := CameraDisplay.cpp CameraSource.cpp ConfigurationReader.cpp \
 					NetworkTableSink.cpp GripPipeline.cpp ImageData.cpp \
@@ -23,20 +24,32 @@ SOURCES := CameraDisplay.cpp CameraSource.cpp ConfigurationReader.cpp \
 					ContourDrawingFilter.cpp ImageDisplay.cpp DataOverlayFilter.cpp \
 					UdpSink.cpp
 
+CLIENT_SOURCES := UdpClient.cpp
+
 OBJECTS := $(SOURCES:.cpp=.o)
+CLIENT_OBJECTS := $(CLIENT_SOURCES:.cpp=.o)
 
 SOURCES := $(addprefix $(SOURCE_DIR)/, $(SOURCES))
+CLIENT_SOURCES := $(addprefix $(SOURCE_DIR)/, $(CLIENT_SOURCES))
+
 OBJECTS := $(addprefix $(OBJECT_DIR)/, $(OBJECTS))
+CLIENT_OBJECTS := $(addprefix $(OBJECT_DIR)/, $(CLIENT_OBJECTS))
+
 EXECUTABLE := $(addprefix $(BIN_DIR)/, $(EXECUTABLE_NAME))
+CLIENT_EXECUTABLE := $(addprefix $(BIN_DIR)/, $(CLIENT_EXECUTABLE_NAME))
+
 INIT_RC_SCRIPT := S02$(INIT_SCRIPT)
 
 CFLAGS := -Wall -ggdb -I$(FRC_DIR)/include -I$(HEADER_DIR)
 LDFLAGS := -L$(FRC_DIR)/lib -lopencv_calib3dd -lopencv_calib3d -lopencv_cored -lopencv_core -lopencv_features2dd -lopencv_features2d -lopencv_flannd -lopencv_flann -lopencv_highguid -lopencv_highgui -lopencv_imgcodecsd -lopencv_imgcodecs -lopencv_imgprocd -lopencv_imgproc -lopencv_java344 -lopencv_mld -lopencv_ml -lopencv_objdetectd -lopencv_objdetect -lopencv_photod -lopencv_photo -lopencv_shaped -lopencv_shape -lopencv_stitchingd -lopencv_stitching -lopencv_superresd -lopencv_superres -lopencv_videod -lopencv_videoiod -lopencv_videoio -lopencv_video -lopencv_videostabd -lopencv_videostab -lntcore
 
-all: mkdirs $(EXECUTABLE)
+all: mkdirs $(EXECUTABLE) $(CLIENT_EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) -o $(EXECUTABLE) $(OBJECTS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS)
+
+$(CLIENT_EXECUTABLE): $(CLIENT_OBJECTS)
+	$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJECTS)
 
 $(OBJECT_DIR)/CameraDisplay.o: $(SOURCE_DIR)/CameraDisplay.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -111,6 +124,9 @@ $(OBJECT_DIR)/DataOverlayFilter.o: $(SOURCE_DIR)/DataOverlayFilter.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJECT_DIR)/UdpSink.o: $(SOURCE_DIR)/UdpSink.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJECT_DIR)/UdpClient.o: $(SOURCE_DIR)/UdpClient.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 mkdirs:
