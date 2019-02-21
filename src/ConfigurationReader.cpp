@@ -84,7 +84,8 @@ namespace Icarus
           break;
 
         case 'h':
-          return HELP_CODE;
+          DisplayUsage(argv);
+          exit(0);
       }
 
 		*config = new VisionConfiguration(cameraIndex,
