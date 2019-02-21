@@ -12,6 +12,7 @@ namespace Icarus
 	{
     OpenSocket();
     BindSocket();
+    WaitForClient();
 	}
 
 	void UdpSink::Clean()
@@ -48,12 +49,25 @@ namespace Icarus
       throw "Failed to bind socket to port.";
   }
 
+  void UdpSink::WaitForClient()
+  {
+    int received;
+    socklen_t clientSize = sizeof(_client);
+    received = recvfrom(_socket, _clientBuffer, SERVER_BUFFER_SIZE, 0, (struct sockaddr *) &_client, &clientSize);
+    if (received <= 0)
+      throw "Failed to receive.";
+
+    _clientBuffer[received] = 0;
+    printf("Received from client: %s\n", _clientBuffer);
+  }
+
   void UdpSink::CloseSocket()
   {
   }
 
 	void UdpSink::Sink(ImageData * source)
 	{
+    printf("Got here.\n");
 	}
 
   bool UdpSink::OpensWindow()
