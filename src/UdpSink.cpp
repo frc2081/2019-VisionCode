@@ -29,7 +29,7 @@ namespace Icarus
   void UdpSink::OpenSocket()
   {
     _opt = 1;
-    if ((_socket = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+    if ((_socket = socket(UDP_ADDR_FAM, UDP_DATAGRAM, 0)) < 0)
       throw "Failed to open socket.";
 
     if (setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &_opt, sizeof(_opt)))
@@ -41,7 +41,7 @@ namespace Icarus
     // TODO: Make this part of the configuration.
     const int port = 48458;
 
-    _address.sin_family = AF_INET;
+    _address.sin_family = UDP_ADDR_FAM;
     _address.sin_addr.s_addr = htonl(INADDR_ANY);
     _address.sin_port = htons(port);
 
@@ -67,7 +67,7 @@ namespace Icarus
 
 	void UdpSink::Sink(ImageData * source)
 	{
-    printf("Got here.\n");
+    throw "Dang.";
 	}
 
   bool UdpSink::OpensWindow()

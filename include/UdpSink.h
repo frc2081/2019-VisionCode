@@ -2,9 +2,7 @@
 
 #include "VisionSink.h"
 #include "VisionConfiguration.h"
-#include <netinet/in.h>
-
-#define SERVER_BUFFER_SIZE 1024
+#include "UdpSettings.h"
 
 namespace Icarus
 {
@@ -14,7 +12,7 @@ namespace Icarus
     VisionConfiguration* _config;
     int _socket;
     int _opt;
-    struct sockaddr_in _address, _client;
+    Address _address, _client;
     unsigned char _clientBuffer[SERVER_BUFFER_SIZE];
 
 	protected:
