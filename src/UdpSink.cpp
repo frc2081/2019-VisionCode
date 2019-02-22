@@ -67,7 +67,11 @@ namespace Icarus
 
 	void UdpSink::Sink(ImageData * source)
 	{
-    throw "Dang.";
+    const char* message = "From the server, yo.";
+
+    if (sendto(_socket, message, strlen(message), 0, (BaseAddress*) &_client, sizeof(_client)) < 0 )
+        throw "Failed to send.";
+
 	}
 
   bool UdpSink::OpensWindow()

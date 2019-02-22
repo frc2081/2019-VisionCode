@@ -27,6 +27,7 @@ int main(int argc, char** argv)
     socket = OpenSocket();
     BindSocket(socket, port, &client);
     Connect(socket, port, serverIp, &client, &server);
+    Receive(socket, &client, &server);
   }
   catch(char const* error)
   {
@@ -85,6 +86,19 @@ void Connect(int socket, int port, char* serverIp, Address* client, Address* ser
 
 void Receive(int socket, Address* client, Address* server)
 {
+  socklen_t serverSize = sizeof(*server);
+  char serverBuffer[SERVER_BUFFER_SIZE];
+
+  for(;;)
+  {
+    int received;
+    received = recvfrom(socket, serverBuffer, SERVER_BUFFER_SIZE, 0, (BaseAddress*) server, &serverSize);
+    if (received <= 0)
+      throw "Failed to receive.";
+
+    serverBuffer[received] = 0;
+    printf("Message from server: %s\n", serverBuffer);
+  }
 }
 
 void ParseInput(int argc, char** argv, char** ip, int* port)
