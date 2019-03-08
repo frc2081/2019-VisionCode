@@ -38,7 +38,7 @@ namespace Icarus
 		Point textOrigin(topLeft.x + boxPadding, topLeft.y + 2* boxPadding);
 		SetInfo(info, data);
 
-		rectangle(*contents, topLeft, bottomRight, boxColor, FILLED, LINE_8);
+		rectangle(*contents, topLeft, bottomRight, boxColor, CV_FILLED, 8);
 		putText(*contents, info, textOrigin, FONT_HERSHEY_SIMPLEX, 0.5, textColor);
   }
 }

@@ -16,6 +16,6 @@ namespace Icarus
   void ContourDrawingFilter::Filter(ImageData* data)
   {
 		Scalar contourColor(2, 8, 164);
-		drawContours(*data->GetImageData(), *data->GetContours(), -1, contourColor, FILLED, 8);
+		drawContours(*data->GetImageData(), *data->GetContours(), -1, contourColor, CV_FILLED, 8);
   }
 }
