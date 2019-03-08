@@ -7,6 +7,7 @@
 #include <string.h>
 #include <errno.h>
 #include <arpa/inet.h>
+#include <opencv2/opencv.hpp>
 
 void ParseInput(int argc, char** argv, char** ip, int* port);
 
@@ -14,6 +15,10 @@ int OpenSocket();
 void BindSocket(int socket, int port, Address* client);
 void Connect(int socket, int port, char* serverIp, Address* client, Address* server);
 void Receive(int socket, Address* client, Address* server);
+void ReceiveImageData(int socket, Address* client, Address* server, cv::Mat* image);
+
+using namespace std;
+using namespace cv;
 
 int main(int argc, char** argv)
 {
@@ -86,19 +91,22 @@ void Connect(int socket, int port, char* serverIp, Address* client, Address* ser
 
 void Receive(int socket, Address* client, Address* server)
 {
-  socklen_t serverSize = sizeof(*server);
-  char serverBuffer[SERVER_BUFFER_SIZE];
-
   for(;;)
-  {
-    int received;
-    received = recvfrom(socket, serverBuffer, SERVER_BUFFER_SIZE, 0, (BaseAddress*) server, &serverSize);
-    if (received <= 0)
-      throw "Failed to receive.";
+    ReceiveImageData(socket, client, server, NULL);
+}
 
-    serverBuffer[received] = 0;
-    printf("Message from server: %s\n", serverBuffer);
-  }
+void ReceiveImageData(int socket, Address* client, Address* server, Mat* image)
+{
+  int received;
+  char serverBuffer[SERVER_BUFFER_SIZE];
+  socklen_t serverSize = sizeof(*server);
+
+  received = recvfrom(socket, serverBuffer, SERVER_BUFFER_SIZE, 0, (BaseAddress*) server, &serverSize);
+  if (received <= 0)
+    throw "Failed to receive.";
+
+  serverBuffer[received] = 0;
+  printf("Message from server: %s\n", serverBuffer);
 }
 
 void ParseInput(int argc, char** argv, char** ip, int* port)

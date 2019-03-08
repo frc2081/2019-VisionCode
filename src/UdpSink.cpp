@@ -2,6 +2,8 @@
 #include "UdpSink.h"
 #include <sys/socket.h>
 #include <stdio.h>
+#include <thread>
+#include <chrono>
 
 using namespace cv;
 using namespace std;
@@ -67,12 +69,17 @@ namespace Icarus
 
 	void UdpSink::Sink(ImageData * source)
 	{
-    const char* message = "From the server, yo.";
+    const int waitInMilliseconds = 800;
+    this_thread::sleep_for(chrono::milliseconds(waitInMilliseconds));
+    SendImageData(source->GetImageData());
+	}
 
+  void UdpSink::SendImageData(cv::Mat* image)
+  {
+    const char* message = "SENT";
     if (sendto(_socket, message, strlen(message), 0, (BaseAddress*) &_client, sizeof(_client)) < 0 )
         throw "Failed to send.";
-
-	}
+  }
 
   bool UdpSink::OpensWindow()
   {
