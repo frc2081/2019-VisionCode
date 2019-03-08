@@ -14,6 +14,7 @@ namespace Icarus
     int _opt;
     Address _address, _client;
     unsigned char _clientBuffer[SERVER_BUFFER_SIZE];
+    void SendImageData(cv::Mat* image);
 
 	protected:
 		void Init();

@@ -2,7 +2,7 @@
 
 #include <netinet/in.h>
 
-#define SERVER_BUFFER_SIZE 1024
+#define SERVER_BUFFER_SIZE 65500
 #define UDP_ADDR_FAM AF_INET
 #define UDP_DATAGRAM SOCK_DGRAM
 

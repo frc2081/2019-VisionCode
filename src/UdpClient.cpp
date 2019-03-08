@@ -98,15 +98,18 @@ void Receive(int socket, Address* client, Address* server)
     ReceiveImageData(socket, client, server, &img);
 }
 
+
+#define CALC_SIZE (size - received) > maxSize ? maxSize : size - received 
 void ReceiveImageData(int socket, Address* client, Address* server, Mat* image)
 {
   socklen_t serverSize = sizeof(*server);
+  const int maxSize = SERVER_BUFFER_SIZE;
   int size = image->total() * image->elemSize();
-  uchar serverBuffer[size];
+  uchar serverBuffer[size+1024];
 
   int received = 0;
   for(int i=0; i<size; i += received)
-    if ((received = recvfrom(socket, serverBuffer+i, size - received, 0, (BaseAddress*) server, &serverSize)) == -1)
+    if ((received = recvfrom(socket, serverBuffer+i, CALC_SIZE, 0, (BaseAddress*) server, &serverSize)) == -1)
       throw "Failed to receive.";
 
   printf("Received an image.\n");

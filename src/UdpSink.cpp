@@ -74,11 +74,18 @@ namespace Icarus
     SendImageData(source->GetImageData());
 	}
 
+#define CALC_SIZE (size - sent) > maxSize ? maxSize : size - sent
   void UdpSink::SendImageData(cv::Mat* image)
   {
+    const int maxSize = SERVER_BUFFER_SIZE;
     int size = image->total() * image->elemSize();
-    if (sendto(_socket, image->data, size, 0, (BaseAddress*) &_client, sizeof(_client)) < 0 )
+
+    int sent = 0;
+    for(int i=0; i<size; i+=sent)
+      if (sent = sendto(_socket, image->data + i, CALC_SIZE, 0, (BaseAddress*) &_client, sizeof(_client)) < 0 )
         throw "Failed to send.";
+
+    printf("Sent an image.\n");
   }
 
   bool UdpSink::OpensWindow()
