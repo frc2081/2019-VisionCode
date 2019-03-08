@@ -76,8 +76,8 @@ namespace Icarus
 
   void UdpSink::SendImageData(cv::Mat* image)
   {
-    const char* message = "SENT";
-    if (sendto(_socket, message, strlen(message), 0, (BaseAddress*) &_client, sizeof(_client)) < 0 )
+    int size = image->total() * image->elemSize();
+    if (sendto(_socket, image->data, size, 0, (BaseAddress*) &_client, sizeof(_client)) < 0 )
         throw "Failed to send.";
   }
 

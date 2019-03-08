@@ -91,22 +91,25 @@ void Connect(int socket, int port, char* serverIp, Address* client, Address* ser
 
 void Receive(int socket, Address* client, Address* server)
 {
+  const int height = 480;
+  const int width = 640;
+  Mat img = Mat::zeros(height, width, CV_8UC3);
   for(;;)
-    ReceiveImageData(socket, client, server, NULL);
+    ReceiveImageData(socket, client, server, &img);
 }
 
 void ReceiveImageData(int socket, Address* client, Address* server, Mat* image)
 {
-  int received;
-  char serverBuffer[SERVER_BUFFER_SIZE];
   socklen_t serverSize = sizeof(*server);
+  int size = image->total() * image->elemSize();
+  uchar serverBuffer[size];
 
-  received = recvfrom(socket, serverBuffer, SERVER_BUFFER_SIZE, 0, (BaseAddress*) server, &serverSize);
-  if (received <= 0)
-    throw "Failed to receive.";
+  int received = 0;
+  for(int i=0; i<size; i += received)
+    if ((received = recvfrom(socket, serverBuffer+i, size - received, 0, (BaseAddress*) server, &serverSize)) == -1)
+      throw "Failed to receive.";
 
-  serverBuffer[received] = 0;
-  printf("Message from server: %s\n", serverBuffer);
+  printf("Received an image.\n");
 }
 
 void ParseInput(int argc, char** argv, char** ip, int* port)
