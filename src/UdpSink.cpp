@@ -81,9 +81,13 @@ namespace Icarus
     int size = image->total() * image->elemSize();
 
     int sent = 0;
-    for(int i=0; i<size; i+=sent)
-      if (sent = sendto(_socket, image->data + i, CALC_SIZE, 0, (BaseAddress*) &_client, sizeof(_client)) < 0 )
+    int sendSize = 0;
+    for(int i=0; i<size; i+=sendSize)
+    {
+      sendSize = CALC_SIZE;
+      if (sent = sendto(_socket, image->data + i, sendSize, 0, (BaseAddress*) &_client, sizeof(_client)) < 0 )
         throw "Failed to send.";
+    }
 
     printf("Sent an image.\n");
   }

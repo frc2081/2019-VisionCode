@@ -105,7 +105,8 @@ void ReceiveImageData(int socket, Address* client, Address* server, Mat* image)
   socklen_t serverSize = sizeof(*server);
   const int maxSize = SERVER_BUFFER_SIZE;
   int size = image->total() * image->elemSize();
-  uchar serverBuffer[size+1024];
+  uchar serverBuffer[size];
+  memset(serverBuffer, 0, size);
 
   int received = 0;
   for(int i=0; i<size; i += received)
