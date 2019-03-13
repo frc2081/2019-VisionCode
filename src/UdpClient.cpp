@@ -113,6 +113,11 @@ void ReceiveImageData(int socket, Address* client, Address* server, Mat* image)
     if ((received = recvfrom(socket, serverBuffer+i, CALC_SIZE, 0, (BaseAddress*) server, &serverSize)) == -1)
       throw "Failed to receive.";
 
+  int ptr=0;
+  for(int i=0; i<image->rows; i++)
+    for (int j=0; j<image->cols; j++)
+      image->at<Vec3b>(i,j) = Vec3b(serverBuffer[ptr++], serverBuffer[ptr++], serverBuffer[ptr++]);
+
   printf("Received an image.\n");
 }
 
