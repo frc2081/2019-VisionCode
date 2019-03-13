@@ -16,6 +16,7 @@ void BindSocket(int socket, int port, Address* client);
 void Connect(int socket, int port, char* serverIp, Address* client, Address* server);
 void Receive(int socket, Address* client, Address* server);
 void ReceiveImageData(int socket, Address* client, Address* server, cv::Mat* image);
+void DisplayImageData(cv::Mat* image);
 
 using namespace std;
 using namespace cv;
@@ -95,7 +96,10 @@ void Receive(int socket, Address* client, Address* server)
   const int width = 640;
   Mat img = Mat::zeros(height, width, CV_8UC3);
   for(;;)
-    ReceiveImageData(socket, client, server, &img);
+  {
+     ReceiveImageData(socket, client, server, &img);
+     DisplayImageData(&img);
+  }
 }
 
 
@@ -119,6 +123,12 @@ void ReceiveImageData(int socket, Address* client, Address* server, Mat* image)
       image->at<Vec3b>(i,j) = Vec3b(serverBuffer[ptr++], serverBuffer[ptr++], serverBuffer[ptr++]);
 
   printf("Received an image.\n");
+}
+
+void DisplayImageData(Mat* image)
+{
+  imwrite("test.jpg", *image);
+  throw "Wrote an image.";
 }
 
 void ParseInput(int argc, char** argv, char** ip, int* port)
